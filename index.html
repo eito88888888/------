@@ -8,9 +8,9 @@
   <link rel="stylesheet" href="games.css" />
 </head>
 <body>
-  <main class="portal">
+  <main class="portal" id="top">
     <header class="portal-header">
-      <a class="brand" href="games.html" aria-label="ゲームポータル">
+      <a class="brand" href="index.html" aria-label="ゲームポータル">
         <span class="brand-mark">8</span>
         <span>EIGHT GAMES</span>
       </a>
@@ -35,9 +35,9 @@
           </div>
           <h3>ネオンサバイバル</h3>
           <p class="description">ゾンビを倒し、コインを集めて装備を強化するサバイバルゲーム。</p>
-          <p class="folder"><span>編集フォルダー</span><code>./</code></p>
-          <a class="play-link" href="index.html" target="_blank" rel="noopener">ゲームをプレイ <span aria-hidden="true">↗</span></a>
-          <a class="edit-link" data-source="game.js">VS Codeでソースを編集 <span aria-hidden="true">↗</span></a>
+          <p class="folder"><span>編集フォルダー</span><code>games/neon-survival/</code></p>
+          <a class="play-link" href="games/neon-survival/index.html" target="_blank" rel="noopener">ゲームをプレイ <span aria-hidden="true">↗</span></a>
+          <a class="edit-link" data-source="games/neon-survival/neon-survival.js">VS Codeでソースを編集 <span aria-hidden="true">↗</span></a>
         </article>
       </div>
     </section>
@@ -115,14 +115,19 @@
 
     <footer class="portal-footer">
       <p>「VS Codeでソースを編集」からゲームのコードを開けます。HTML・CSSは同じフォルダーにあります。</p>
-      <a href="index.html">最新版のホームへ戻る <span aria-hidden="true">→</span></a>
+      <a href="#top">ポータルの先頭へ戻る <span aria-hidden="true">↑</span></a>
     </footer>
   </main>
   <script>
     document.querySelectorAll(".edit-link").forEach((link) => {
       const source = new URL(link.dataset.source, window.location.href);
-      const path = decodeURIComponent(source.pathname).replace(/^\/([A-Za-z]:\/)/, "$1");
-      link.href = `vscode://file/${path}`;
+      if (window.location.protocol === "file:") {
+        const path = decodeURIComponent(source.pathname).replace(/^\/([A-Za-z]:\/)/, "$1");
+        link.href = `vscode://file/${path}`;
+      } else {
+        link.href = source.href;
+        link.childNodes[0].nodeValue = "ソースを見る ";
+      }
     });
   </script>
 </body>
