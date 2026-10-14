@@ -1,194 +1,129 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ja">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
-  <title>🧟 ネオンサバイバル</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#080914" />
+  <title>ゲームポータル | EIGHT GAMES</title>
+  <link rel="stylesheet" href="games.css" />
 </head>
 <body>
-  <!-- ═══ ホーム画面 ═══ -->
-  <div class="container" id="homeScreen">
-    <a class="portal-link" href="games.html">🎮 ゲーム一覧・アーカイブ</a>
-    <h1>🧟 ネオンサバイバル</h1>
-    <div class="gold-bar">
-　      <span class="gold-icon">💰</span>
-      <span class="gold-value" id="homeGold">0</span>
-      <span class="gold-label">GOLD</span>
-    </div>
-    <!-- コード入力（10連ガチャの上） -->
-    <div class="code-row">
-      <input type="text" id="codeInput" class="code-input" placeholder="コードを入力する" maxlength="20" autocomplete="off" />
-      <button class="code-btn" id="codeBtn">入力</button>
-    </div>
-    <div class="code-msg hidden" id="codeMsg"></div>
-    <!-- ガチャ（ゲームスタートの上） -->
-    <div class="gacha-row">
-      <button class="gacha-btn" id="gachaBtn">
-        <span class="gacha-icon">🎁</span>
-        <span class="gacha-title">ガチャ</span>
-        <span class="gacha-cost">50Gで引く</span>
-      </button>
-      <button class="gacha-btn gacha-btn-10" id="gachaBtn10">
-        <span class="gacha-icon">🎁</span>
-        <span class="gacha-title">10連ガチャ</span>
-        <span class="gacha-cost">500Gで引く</span>
-      </button>
-    </div>
-    <div class="home-menu">
-      <button class="home-card shop-card" id="shopBtn">
-        <div class="card-icon">🏪</div>
-        <div class="card-title">ショップ</div>
-        <div class="card-desc">武器を購入・装備</div>
-      </button>
-      <button class="home-card start-card" id="homeStartBtn">
-        <div class="card-icon">🎮</div>
-        <div class="card-title">ゲームスタート</div>
-        <div class="card-desc">サバイバル開始</div>
-      </button>
-      <button class="home-card gold-stage-card" id="goldStageBtn">
-        <div class="card-icon">👑</div>
-        <div class="card-title">ゴールドステージ</div>
-        <div class="card-desc">1000Gで挑戦！ 全敵ゴールド & 時間制限2分</div>
-      </button>
-    </div>
-    <!-- 装備（ゲームスタートの下） -->
-    <button class="equip-btn" id="equipBtn">
-      <span class="equip-icon">🎒</span>
-      <span class="equip-title">装備</span>
-      <span class="equip-desc">装備を確認・変更</span>
-    </button>
-    <div class="equipped-info">
-      装備中: <span id="equippedName" class="equipped-name">🔫 ピストル</span>
-    </div>
-    <div class="skin-row">
-      <span class="skin-label">🎨 スキン:</span>
-      <button class="skin-toggle" id="skinBtn">アニメ</button>
-    </div>
-    <div class="home-controls">
-      ⬆️⬇️⬅️➡️ 移動 / 💰 コインを集めろ / ␣ 射撃
-    </div>
-    <button class="reset-btn" id="resetBtn">🔄 リセット</button>
+  <main class="portal">
+    <header class="portal-header">
+      <a class="brand" href="games.html" aria-label="ゲームポータル">
+        <span class="brand-mark">8</span>
+        <span>EIGHT GAMES</span>
+      </a>
+      <p class="eyebrow">MY GAME COLLECTION</p>
+      <h1>ゲームポータル</h1>
+      <p class="intro">遊びたいゲームを選ぼう。アーカイブ作品も、いつでもプレイ・編集できます。</p>
+    </header>
 
-    <!-- ガチャ結果モーダル -->
-    <div class="gacha-modal hidden" id="gachaModal">
-      <div class="gacha-modal-content">
-        <h2>🎁 ガチャ</h2>
-        <div id="gachaResult"></div>
-        <!-- 宝箱演出 -->
-        <div class="gacha-chest-wrap hidden" id="gachaChestWrap">
-          <div class="gacha-chest" id="gachaChest">
-            <div class="chest-lid"></div>
-            <div class="chest-base"></div>
-            <div class="chest-lock"></div>
-            <div class="chest-glow"></div>
-            <div class="chest-rays"></div>
+    <section class="collection" aria-labelledby="current-heading">
+      <div class="section-heading">
+        <div>
+          <p class="section-kicker">LATEST BUILD</p>
+          <h2 id="current-heading">現行ゲーム</h2>
+        </div>
+        <span class="count">01 GAME</span>
+      </div>
+      <div class="game-grid">
+        <article class="game-card featured">
+          <div class="card-top">
+            <span class="game-icon" aria-hidden="true">🧟</span>
+            <span class="status current">最新版</span>
           </div>
-          <div class="chest-text" id="chestText">ガチャを引いています...</div>
-        </div>
-        <button class="start-btn" id="gachaCloseBtn">OK</button>
+          <h3>ネオンサバイバル</h3>
+          <p class="description">ゾンビを倒し、コインを集めて装備を強化するサバイバルゲーム。</p>
+          <p class="folder"><span>編集フォルダー</span><code>./</code></p>
+          <a class="play-link" href="index.html" target="_blank" rel="noopener">ゲームをプレイ <span aria-hidden="true">↗</span></a>
+          <a class="edit-link" data-source="game.js">VS Codeでソースを編集 <span aria-hidden="true">↗</span></a>
+        </article>
       </div>
-    </div>
+    </section>
 
-    <!-- 管理者パネルモーダル -->
-    <div class="admin-modal hidden" id="adminModal">
-      <div class="admin-modal-content">
-        <h2>👑 管理者パネル</h2>
-        <div class="admin-section">
-          <div class="admin-label">💰 ゴールド調整</div>
-          <div class="admin-row">
-            <input type="number" id="adminGoldInput" class="admin-input" min="0" />
-            <button class="admin-btn" id="adminGoldSetBtn">設定</button>
+    <section class="collection" aria-labelledby="archive-heading">
+      <div class="section-heading">
+        <div>
+          <p class="section-kicker">PAST BUILDS</p>
+          <h2 id="archive-heading">アーカイブ</h2>
+        </div>
+        <span class="count">05 GAMES</span>
+      </div>
+      <div class="game-grid">
+        <article class="game-card">
+          <div class="card-top">
+            <span class="game-icon" aria-hidden="true">🧟</span>
+            <span class="status">ARCHIVE · 09.13</span>
           </div>
-        </div>
-        <div class="admin-section">
-          <div class="admin-label">🔫 武器・装備の解放</div>
-          <button class="admin-btn admin-btn-wide" id="adminUnlockWeaponsBtn">🔫 全武器を解放</button>
-          <button class="admin-btn admin-btn-wide" id="adminUnlockEquipBtn">🎒 全装備を解放</button>
-        </div>
-        <div class="admin-msg hidden" id="adminMsg"></div>
-        <button class="start-btn" id="adminCloseBtn">閉じる</button>
-      </div>
-    </div>
-  </div>
+          <h3>ネオンサバイバル</h3>
+          <p class="description">武器や装備を集めて、次々と現れる敵に挑戦しよう。</p>
+          <p class="folder"><span>編集フォルダー</span><code>archive/neon-survival-2026-09-13/</code></p>
+          <a class="play-link" href="archive/neon-survival-2026-09-13/index.html" target="_blank" rel="noopener">ゲームをプレイ <span aria-hidden="true">↗</span></a>
+          <a class="edit-link" data-source="archive/neon-survival-2026-09-13/game.js">VS Codeでソースを編集 <span aria-hidden="true">↗</span></a>
+        </article>
 
-  <!-- ═══ 装備画面 ═══ -->
-  <div class="container hidden" id="equipScreen">
-    <h1>🎒 装備</h1>
-    <div class="gold-bar">
-      <span class="gold-icon">💰</span>
-      <span class="gold-value" id="equipGold">0</span>
-      <span class="gold-label">GOLD</span>
-    </div>
-    <div class="equip-list" id="equipList"></div>
-    <button class="back-btn" id="equipBackBtn">← ホームに戻る</button>
-  </div>
+        <article class="game-card">
+          <div class="card-top">
+            <span class="game-icon" aria-hidden="true">🐍</span>
+            <span class="status">ARCHIVE · 09.10</span>
+          </div>
+          <h3>スネーク</h3>
+          <p class="description">りんごを食べてスネークを伸ばし、ハイスコアを目指そう。</p>
+          <p class="folder"><span>編集フォルダー</span><code>archive/snake-2026-09-10/</code></p>
+          <a class="play-link" href="archive/snake-2026-09-10/index.html" target="_blank" rel="noopener">ゲームをプレイ <span aria-hidden="true">↗</span></a>
+          <a class="edit-link" data-source="archive/snake-2026-09-10/game.js">VS Codeでソースを編集 <span aria-hidden="true">↗</span></a>
+        </article>
 
-  <!-- ═══ ショップ画面 ═══ -->
-  <div class="container hidden" id="shopScreen">
-    <h1>🏪 ショップ</h1>
-    <div class="gold-bar">
-      <span class="gold-icon">💰</span>
-      <span class="gold-value" id="shopGold">0</span>
-      <span class="gold-label">GOLD</span>
-    </div>
-    <div class="shop-list" id="shopList"></div>
-    <button class="back-btn" id="shopBackBtn">← ホームに戻る</button>
-  </div>
+        <article class="game-card">
+          <div class="card-top">
+            <span class="game-icon" aria-hidden="true">🚀</span>
+            <span class="status">ARCHIVE · 09.10</span>
+          </div>
+          <h3>スペースシューター</h3>
+          <p class="description">宇宙船を動かして敵を撃ち、ステージを進めよう。</p>
+          <p class="folder"><span>編集フォルダー</span><code>archive/space-shooter-2026-09-10/</code></p>
+          <a class="play-link" href="archive/space-shooter-2026-09-10/index.html" target="_blank" rel="noopener">ゲームをプレイ <span aria-hidden="true">↗</span></a>
+          <a class="edit-link" data-source="archive/space-shooter-2026-09-10/game.js">VS Codeでソースを編集 <span aria-hidden="true">↗</span></a>
+        </article>
 
-  <!-- ═══ ゲーム画面 ═══ -->
-  <div class="container hidden" id="gameScreen">
-    <h1>🧟 ネオンサバイバル</h1>
-    <div class="info-bar">
-      <div class="info">
-        <span class="label">スコア</span>
-        <span class="value" id="score">0</span>
+        <article class="game-card">
+          <div class="card-top">
+            <span class="game-icon" aria-hidden="true">🃏</span>
+            <span class="status">ARCHIVE · 09.08</span>
+          </div>
+          <h3>メモリカードゲーム</h3>
+          <p class="description">カードをめくって同じ絵柄のペアをそろえよう。</p>
+          <p class="folder"><span>編集フォルダー</span><code>archive/memory-card-game-2026-09-08/</code></p>
+          <a class="play-link" href="archive/memory-card-game-2026-09-08/index.html" target="_blank" rel="noopener">ゲームをプレイ <span aria-hidden="true">↗</span></a>
+          <a class="edit-link" data-source="archive/memory-card-game-2026-09-08/game.js">VS Codeでソースを編集 <span aria-hidden="true">↗</span></a>
+        </article>
+
+        <article class="game-card">
+          <div class="card-top">
+            <span class="game-icon" aria-hidden="true">📕</span>
+            <span class="status">ARCHIVE · 09.08</span>
+          </div>
+          <h3>ことばの角</h3>
+          <p class="description">動く人の小指をねらって、タイミングよく辞典を落とそう。</p>
+          <p class="folder"><span>編集フォルダー</span><code>archive/survival-game-2026-09-08/</code></p>
+          <a class="play-link" href="archive/survival-game-2026-09-08/index.html" target="_blank" rel="noopener">ゲームをプレイ <span aria-hidden="true">↗</span></a>
+          <a class="edit-link" data-source="archive/survival-game-2026-09-08/game.js">VS Codeでソースを編集 <span aria-hidden="true">↗</span></a>
+        </article>
       </div>
-      <div class="info">
-        <span class="label">HP</span>
-        <div class="value hp-bar" id="hp"></div>
-      </div>
-      <div class="info">
-        <span class="label">ウェーブ</span>
-        <span class="value" id="wave">1</span>
-      </div>
-      <div class="info">
-        <span class="label">💰</span>
-        <span class="value" id="gold">0</span>
-      </div>
-      <div class="info">
-        <span class="label">ハイスコア</span>
-        <span class="value" id="highscore">0</span>
-      </div>
-      <div class="info hidden" id="timerInfo">
-        <span class="label">⏰ タイマー</span>
-        <span class="value gold-timer" id="timer">30</span>
-      </div>
-    </div>
-    <div class="game-wrapper">
-      <canvas id="gameCanvas" width="480" height="480"></canvas>
-      <div class="overlay hidden-overlay" id="overlay">
-        <div class="overlay-content">
-          <h2 id="overlayTitle"></h2>
-          <p id="overlayText"></p>
-          <button class="start-btn" id="gameOverBtn">ホームに戻る</button>
-        </div>
-      </div>
-    </div>
-    <div class="controls-info">
-      <span>⬆️⬇️⬅️➡️ 移動</span>
-      <span>💥 スペースで射撃</span>
-    </div>
-    <button class="game-home-btn" id="gameHomeBtn">🏠 ホームに戻る</button>
-    <div class="mobile-controls" id="mobileControls">
-      <button class="ctrl-btn" id="btnUp">▲</button>
-      <div class="ctrl-row">
-        <button class="ctrl-btn" id="btnLeft">◀</button>
-        <button class="ctrl-btn" id="btnDown">▼</button>
-        <button class="ctrl-btn" id="btnRight">▶</button>
-      </div>
-    </div>
-  </div>
-  <script src="game.js?v=20"></script>
+    </section>
+
+    <footer class="portal-footer">
+      <p>「VS Codeでソースを編集」からゲームのコードを開けます。HTML・CSSは同じフォルダーにあります。</p>
+      <a href="index.html">最新版のホームへ戻る <span aria-hidden="true">→</span></a>
+    </footer>
+  </main>
+  <script>
+    document.querySelectorAll(".edit-link").forEach((link) => {
+      const source = new URL(link.dataset.source, window.location.href);
+      const path = decodeURIComponent(source.pathname).replace(/^\/([A-Za-z]:\/)/, "$1");
+      link.href = `vscode://file/${path}`;
+    });
+  </script>
 </body>
 </html>

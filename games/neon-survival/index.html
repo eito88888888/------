@@ -1,0 +1,194 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <title>🧟 ネオンサバイバル</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- ═══ ホーム画面 ═══ -->
+  <div class="container" id="homeScreen">
+    <a class="portal-link" href="games.html">🎮 ゲーム一覧・アーカイブ</a>
+    <h1>🧟 ネオンサバイバル</h1>
+    <div class="gold-bar">
+　      <span class="gold-icon">💰</span>
+      <span class="gold-value" id="homeGold">0</span>
+      <span class="gold-label">GOLD</span>
+    </div>
+    <!-- コード入力（10連ガチャの上） -->
+    <div class="code-row">
+      <input type="text" id="codeInput" class="code-input" placeholder="コードを入力する" maxlength="20" autocomplete="off" />
+      <button class="code-btn" id="codeBtn">入力</button>
+    </div>
+    <div class="code-msg hidden" id="codeMsg"></div>
+    <!-- ガチャ（ゲームスタートの上） -->
+    <div class="gacha-row">
+      <button class="gacha-btn" id="gachaBtn">
+        <span class="gacha-icon">🎁</span>
+        <span class="gacha-title">ガチャ</span>
+        <span class="gacha-cost">50Gで引く</span>
+      </button>
+      <button class="gacha-btn gacha-btn-10" id="gachaBtn10">
+        <span class="gacha-icon">🎁</span>
+        <span class="gacha-title">10連ガチャ</span>
+        <span class="gacha-cost">500Gで引く</span>
+      </button>
+    </div>
+    <div class="home-menu">
+      <button class="home-card shop-card" id="shopBtn">
+        <div class="card-icon">🏪</div>
+        <div class="card-title">ショップ</div>
+        <div class="card-desc">武器を購入・装備</div>
+      </button>
+      <button class="home-card start-card" id="homeStartBtn">
+        <div class="card-icon">🎮</div>
+        <div class="card-title">ゲームスタート</div>
+        <div class="card-desc">サバイバル開始</div>
+      </button>
+      <button class="home-card gold-stage-card" id="goldStageBtn">
+        <div class="card-icon">👑</div>
+        <div class="card-title">ゴールドステージ</div>
+        <div class="card-desc">1000Gで挑戦！ 全敵ゴールド & 時間制限2分</div>
+      </button>
+    </div>
+    <!-- 装備（ゲームスタートの下） -->
+    <button class="equip-btn" id="equipBtn">
+      <span class="equip-icon">🎒</span>
+      <span class="equip-title">装備</span>
+      <span class="equip-desc">装備を確認・変更</span>
+    </button>
+    <div class="equipped-info">
+      装備中: <span id="equippedName" class="equipped-name">🔫 ピストル</span>
+    </div>
+    <div class="skin-row">
+      <span class="skin-label">🎨 スキン:</span>
+      <button class="skin-toggle" id="skinBtn">アニメ</button>
+    </div>
+    <div class="home-controls">
+      ⬆️⬇️⬅️➡️ 移動 / 💰 コインを集めろ / ␣ 射撃
+    </div>
+    <button class="reset-btn" id="resetBtn">🔄 リセット</button>
+
+    <!-- ガチャ結果モーダル -->
+    <div class="gacha-modal hidden" id="gachaModal">
+      <div class="gacha-modal-content">
+        <h2>🎁 ガチャ</h2>
+        <div id="gachaResult"></div>
+        <!-- 宝箱演出 -->
+        <div class="gacha-chest-wrap hidden" id="gachaChestWrap">
+          <div class="gacha-chest" id="gachaChest">
+            <div class="chest-lid"></div>
+            <div class="chest-base"></div>
+            <div class="chest-lock"></div>
+            <div class="chest-glow"></div>
+            <div class="chest-rays"></div>
+          </div>
+          <div class="chest-text" id="chestText">ガチャを引いています...</div>
+        </div>
+        <button class="start-btn" id="gachaCloseBtn">OK</button>
+      </div>
+    </div>
+
+    <!-- 管理者パネルモーダル -->
+    <div class="admin-modal hidden" id="adminModal">
+      <div class="admin-modal-content">
+        <h2>👑 管理者パネル</h2>
+        <div class="admin-section">
+          <div class="admin-label">💰 ゴールド調整</div>
+          <div class="admin-row">
+            <input type="number" id="adminGoldInput" class="admin-input" min="0" />
+            <button class="admin-btn" id="adminGoldSetBtn">設定</button>
+          </div>
+        </div>
+        <div class="admin-section">
+          <div class="admin-label">🔫 武器・装備の解放</div>
+          <button class="admin-btn admin-btn-wide" id="adminUnlockWeaponsBtn">🔫 全武器を解放</button>
+          <button class="admin-btn admin-btn-wide" id="adminUnlockEquipBtn">🎒 全装備を解放</button>
+        </div>
+        <div class="admin-msg hidden" id="adminMsg"></div>
+        <button class="start-btn" id="adminCloseBtn">閉じる</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ 装備画面 ═══ -->
+  <div class="container hidden" id="equipScreen">
+    <h1>🎒 装備</h1>
+    <div class="gold-bar">
+      <span class="gold-icon">💰</span>
+      <span class="gold-value" id="equipGold">0</span>
+      <span class="gold-label">GOLD</span>
+    </div>
+    <div class="equip-list" id="equipList"></div>
+    <button class="back-btn" id="equipBackBtn">← ホームに戻る</button>
+  </div>
+
+  <!-- ═══ ショップ画面 ═══ -->
+  <div class="container hidden" id="shopScreen">
+    <h1>🏪 ショップ</h1>
+    <div class="gold-bar">
+      <span class="gold-icon">💰</span>
+      <span class="gold-value" id="shopGold">0</span>
+      <span class="gold-label">GOLD</span>
+    </div>
+    <div class="shop-list" id="shopList"></div>
+    <button class="back-btn" id="shopBackBtn">← ホームに戻る</button>
+  </div>
+
+  <!-- ═══ ゲーム画面 ═══ -->
+  <div class="container hidden" id="gameScreen">
+    <h1>🧟 ネオンサバイバル</h1>
+    <div class="info-bar">
+      <div class="info">
+        <span class="label">スコア</span>
+        <span class="value" id="score">0</span>
+      </div>
+      <div class="info">
+        <span class="label">HP</span>
+        <div class="value hp-bar" id="hp"></div>
+      </div>
+      <div class="info">
+        <span class="label">ウェーブ</span>
+        <span class="value" id="wave">1</span>
+      </div>
+      <div class="info">
+        <span class="label">💰</span>
+        <span class="value" id="gold">0</span>
+      </div>
+      <div class="info">
+        <span class="label">ハイスコア</span>
+        <span class="value" id="highscore">0</span>
+      </div>
+      <div class="info hidden" id="timerInfo">
+        <span class="label">⏰ タイマー</span>
+        <span class="value gold-timer" id="timer">30</span>
+      </div>
+    </div>
+    <div class="game-wrapper">
+      <canvas id="gameCanvas" width="480" height="480"></canvas>
+      <div class="overlay hidden-overlay" id="overlay">
+        <div class="overlay-content">
+          <h2 id="overlayTitle"></h2>
+          <p id="overlayText"></p>
+          <button class="start-btn" id="gameOverBtn">ホームに戻る</button>
+        </div>
+      </div>
+    </div>
+    <div class="controls-info">
+      <span>⬆️⬇️⬅️➡️ 移動</span>
+      <span>💥 スペースで射撃</span>
+    </div>
+    <button class="game-home-btn" id="gameHomeBtn">🏠 ホームに戻る</button>
+    <div class="mobile-controls" id="mobileControls">
+      <button class="ctrl-btn" id="btnUp">▲</button>
+      <div class="ctrl-row">
+        <button class="ctrl-btn" id="btnLeft">◀</button>
+        <button class="ctrl-btn" id="btnDown">▼</button>
+        <button class="ctrl-btn" id="btnRight">▶</button>
+      </div>
+    </div>
+  </div>
+  <script src="game.js?v=20"></script>
+</body>
+</html>
