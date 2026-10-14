@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>メモリカードゲーム</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>🃏 メモリカードゲーム</h1>
+    <div class="info-bar">
+      <div class="info">
+        <span class="label">スコア</span>
+        <span class="value" id="score">0</span>
+      </div>
+      <div class="info">
+        <span class="label">ターン数</span>
+        <span class="value" id="moves">0</span>
+      </div>
+      <div class="info">
+        <span class="label">残りペア</span>
+        <span class="value" id="pairs">8</span>
+      </div>
+    </div>
+    <div class="board" id="board"></div>
+    <button class="restart-btn" id="restart">🔄 リスタート</button>
+    <div class="message" id="message"></div>
+  </div>
+  <script src="game.js"></script>
+</body>
+</html>

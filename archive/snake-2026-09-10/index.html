@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <title>🐍 スネーク</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>🐍 スネーク</h1>
+    <div class="info-bar">
+      <div class="info">
+        <span class="label">スコア</span>
+        <span class="value" id="score">0</span>
+      </div>
+      <div class="info">
+        <span class="label">長さ</span>
+        <span class="value" id="length">3</span>
+      </div>
+      <div class="info">
+        <span class="label">レベル</span>
+        <span class="value" id="level">1</span>
+      </div>
+      <div class="info">
+        <span class="label">ハイスコア</span>
+        <span class="value" id="highscore">0</span>
+      </div>
+    </div>
+    <div class="game-wrapper">
+      <canvas id="gameCanvas" width="480" height="480"></canvas>
+      <div class="overlay" id="overlay">
+        <div class="overlay-content">
+          <h2 id="overlayTitle">🐍 スネーク</h2>
+          <p id="overlayText">矢印キー / WASD で移動<br>食べるたびにスネークが長くなる！<br>壁や自分に当たるとゲームオーバー</p>
+          <button class="start-btn" id="startBtn">ゲームスタート</button>
+          <button class="home-btn" id="homeBtn">🏠 ホームへ戻る</button>
+        </div>
+      </div>
+    </div>
+    <div class="controls-info">
+      <span>⬆️⬇️⬅️➡️ 移動</span>
+      <span>🍎 りんごを食べて伸ばそう</span>
+    </div>
+    <!-- モバイル用コントローラー -->
+    <div class="mobile-controls" id="mobileControls">
+      <button class="ctrl-btn" id="btnUp">▲</button>
+      <div class="ctrl-row">
+        <button class="ctrl-btn" id="btnLeft">◀</button>
+        <button class="ctrl-btn" id="btnDown">▼</button>
+        <button class="ctrl-btn" id="btnRight">▶</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ホーム画面 -->
+  <div class="home-screen" id="homeScreen">
+    <div class="home-panel">
+      <h2>🐍 スネーク</h2>
+      <p class="home-sub">キャラクター・衣装・背景を選んでね！</p>
+      <div class="select-section">
+        <h3>🐍 キャラクター</h3>
+        <div class="select-grid" id="charSelect"></div>
+      </div>
+      <div class="select-section">
+        <h3>👗 衣装</h3>
+        <div class="select-grid" id="costumeSelect"></div>
+      </div>
+      <div class="select-section">
+        <h3>🎨 背景</h3>
+        <div class="select-grid" id="bgSelect"></div>
+      </div>
+      <button class="start-btn" id="homeStartBtn">ゲームスタート</button>
+    </div>
+  </div>
+  <script src="game.js"></script>
+</body>
+</html>

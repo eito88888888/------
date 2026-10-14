@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ことばの角</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=Zen+Kaku+Gothic+New:wght@500;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="game-shell">
+    <header class="topbar">
+      <div class="brand-mark"><span>国</span><span>語</span></div>
+      <div><p class="eyebrow">KOKUGO DICTIONARY DROP</p><h1>ことばの角</h1></div>
+      <div class="stats" aria-label="ゲーム情報"><div><span>人</span><strong id="personValue">1 / 8</strong></div><div><span>得点</span><strong id="scoreValue">0000</strong></div></div>
+    </header>
+    <section class="play-card">
+      <div class="instruction-row"><p id="message">小指の位置を読んで、スペースで辞典を落とす</p><span class="status-dot" id="statusDot">READY</span></div>
+      <div class="arena-wrap">
+        <canvas id="world" width="960" height="540" aria-label="辞典を落として小指を狙うゲーム画面"></canvas>
+        <div class="start-panel" id="startPanel"><p class="panel-kicker">ROUND 01</p><h2>角を、読む。</h2><p>左右に動く人の小指をよく見て、<br />いちばん良い瞬間に辞典を落とそう。</p><button class="primary-btn" id="startButton">ゲーム開始 <span>SPACE</span></button></div>
+        <div class="result-panel hidden" id="resultPanel"><p class="panel-kicker">ALL DONE</p><h2 id="resultTitle">全員クリア</h2><p id="resultText">見事な角度でした。</p><button class="primary-btn" id="retryButton">もう一度 <span>R</span></button></div>
+      </div>
+      <div class="control-row"><div class="key-guide"><kbd>←</kbd><kbd>→</kbd><span>人を横に動かす</span></div><div class="drop-guide"><kbd>SPACE</kbd><span>辞典を落とす</span></div></div>
+    </section>
+    <footer>タイミングよく小指の真上へ。辞典の角が当たると次の人へ進みます。</footer>
+  </main>
+  <script src="game.js"></script>
+</body>
+</html>

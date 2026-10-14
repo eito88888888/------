@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🚀 スペースシューター</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>🚀 スペースシューター</h1>
+    <div class="info-bar">
+      <div class="info">
+        <span class="label">スコア</span>
+        <span class="value" id="score">0</span>
+      </div>
+      <div class="info">
+        <span class="label">ライフ</span>
+        <span class="value" id="lives">❤️❤️❤️</span>
+      </div>
+      <div class="info">
+        <span class="label">レベル</span>
+        <span class="value" id="level">1</span>
+      </div>
+      <div class="info">
+        <span class="label">ハイスコア</span>
+        <span class="value" id="highscore">0</span>
+      </div>
+    </div>
+    <div class="game-wrapper">
+      <canvas id="gameCanvas" width="480" height="640"></canvas>
+      <div class="overlay" id="overlay">
+        <div class="overlay-content">
+          <h2 id="overlayTitle">🚀 スペースシューター</h2>
+          <p id="overlayText">スペースキー / タップで射撃<br>矢印キー / スワイプで移動</p>
+          <button class="start-btn" id="startBtn">ゲームスタート</button>
+        </div>
+      </div>
+    </div>
+    <div class="controls-info">
+      <span>⬅️ ➡️ 移動</span>
+      <span>💣 スペースキーで射撃</span>
+    </div>
+  </div>
+  <script src="game.js"></script>
+</body>
+</html>

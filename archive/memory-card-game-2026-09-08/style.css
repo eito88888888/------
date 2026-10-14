@@ -1,0 +1,194 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #fff;
+}
+
+.container {
+  text-align: center;
+  padding: 2rem;
+}
+
+h1 {
+  font-size: 2.2rem;
+  margin-bottom: 1.5rem;
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+}
+
+/* ─── Info Bar ─── */
+.info-bar {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.info {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 0.6rem 1.4rem;
+  backdrop-filter: blur(6px);
+}
+
+.info .label {
+  display: block;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  opacity: 0.7;
+}
+
+.info .value {
+  display: block;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+/* ─── Board ─── */
+.board {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  max-width: 480px;
+  margin: 0 auto 1.5rem;
+}
+
+.card {
+  aspect-ratio: 3 / 4;
+  perspective: 600px;
+  cursor: pointer;
+}
+
+.card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.5s ease;
+  border-radius: 14px;
+}
+
+.card.flipped .card-inner {
+  transform: rotateY(180deg);
+}
+
+.card-front,
+.card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 裏面 */
+.card-back {
+  background: linear-gradient(145deg, #e94560, #c23152);
+  box-shadow: 0 4px 15px rgba(233, 69, 96, 0.4);
+  font-size: 2rem;
+}
+
+.card-back::after {
+  content: '?';
+  font-size: 2.4rem;
+  font-weight: 800;
+  opacity: 0.6;
+}
+
+/* 表面 */
+.card-front {
+  background: linear-gradient(145deg, #1e293b, #334155);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  transform: rotateY(180deg);
+  font-size: 2.8rem;
+}
+
+/* マッチ成功時のエフェクト */
+.card.matched .card-inner {
+  transform: rotateY(180deg);
+}
+
+.card.matched .card-front {
+  background: linear-gradient(145deg, #166534, #15803d);
+  box-shadow: 0 0 25px rgba(34, 197, 94, 0.5);
+}
+
+/* ホバー */
+.card:not(.flipped):not(.matched):hover .card-inner {
+  transform: rotateY(15deg);
+}
+
+.card:not(.flipped):not(.matched):hover .card-back {
+  box-shadow: 0 6px 25px rgba(233, 69, 96, 0.6);
+}
+
+/* ─── Button ─── */
+.restart-btn {
+  background: linear-gradient(145deg, #e94560, #c23152);
+  color: #fff;
+  border: none;
+  padding: 0.8rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 15px rgba(233, 69, 96, 0.4);
+}
+
+.restart-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 25px rgba(233, 69, 96, 0.6);
+}
+
+.restart-btn:active {
+  transform: translateY(0);
+}
+
+/* ─── Message ─── */
+.message {
+  margin-top: 1rem;
+  font-size: 1.3rem;
+  font-weight: 600;
+  min-height: 2rem;
+  color: #facc15;
+  text-shadow: 0 0 15px rgba(250, 204, 21, 0.4);
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 500px) {
+  .board {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    max-width: 340px;
+  }
+
+  .card-front {
+    font-size: 2rem;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  .info-bar {
+    gap: 0.8rem;
+  }
+
+  .info {
+    padding: 0.4rem 0.8rem;
+  }
+}

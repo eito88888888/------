@@ -1,0 +1,168 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  background: radial-gradient(ellipse at center, #050510 40%, #000);
+  overflow-x: hidden;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #fff;
+  /* 星背景 */
+  background-image:
+    radial-gradient(white 1px, transparent 1px),
+    radial-gradient(rgba(173,216,230,.6) 1px, transparent 1px);
+  background-position: 0 0, 25px 35px;
+  background-attachment: fixed;
+}
+
+.container {
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 24px 15px 60px;
+  text-align: center;
+}
+
+h1 {
+  font-size: 32px;
+  margin-bottom: 18px;
+  letter-spacing: 2px;
+  text-shadow: 0 0 14px rgba(80,180,255,.85), 0 0 34px rgba(120,90,255,.55);
+  animation: glow-pulse 2.4s ease-in-out infinite alternate;
+}
+
+@keyframes glow-pulse {
+  0% { text-shadow: 0 0 11px rgba(70,170,255,.65), 0 0 26px rgba(110,80,250,.42); }
+  33% { transform: translateY(-1px); }
+  66% { transform: none; }
+  67% { text-shadow: 0 0 17px rgba(140,220,255,.95), 0 0 46px rgba(150,105,255,.72); }
+  99% { transform: translateY(1px); }
+  00% {}
+}
+
+/* ─── Info bar ─── */
+.info-bar {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(88px, 96px));
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 19px;
+}
+
+.info {
+  background: rgba(23,36,64,.62);
+  border: 1px solid rgba(92,160,240,.38);
+  border-radius: 21px;
+  padding: 8px 6px 9px;
+  backdrop-filter: blur(7px);
+  transition: transform .27s cubic-bezier(.175,.885,.31,1.275);
+}
+
+.info:hover { transform: scale(1.05); }
+
+.info .label {
+  display: block;
+  font-size: 68%;
+  letter-spacing: 130%;
+  text-transform: uppercase;
+  opacity: .74;
+  margin-bottom: 3px;
+}
+
+.value {
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+#lives { font-size: 115%; letter-spacing: 2px; }
+
+.score-pop {
+  animation: popScore .48s ease forwards;
+}
+@keyframes popScore {
+  0% { transform: scale(1.02); color:#ffe066;}
+  52% { transform: scale(1.06); color:#ffffff;}
+  78% { transform: scale(1.03); color:#bfefff;}
+  100% {transform:none;}
+}
+
+
+/* ─── Game wrapper/canvas ─── */
+.game-wrapper {
+  position: relative;
+  width: fit-content;
+  margin: 0 auto;
+  touch-action: manipulation;
+}
+
+canvas {
+  display: block;
+  width: 460px;
+  max-width: calc(94vw - 8px);
+  aspect-ratio: 360 / 470;
+  height:auto;
+  border-radius: 29px;
+  border: 2px solid rgba(98,168,248,.43);
+  box-shadow: inset 0 39px 82px rgba(58,112,196,.07), 0 41px 76px rgba(54,86,190,.47);
+  cursor: crosshair;
+  background-color: rgb(4,7,18);
+
+  /* canvas内の星空もCSSでも足しておくと綺麗だがJS側で描画するので不要 */
+}
+
+@media(max-width:560px){
+  h1{font-size:26px;}
+  .info{padding-block:6px;}
+}
+
+/* ─── Overlay ─── */
+.overlay{
+  position:absolute;
+  inset:-2px;
+  z-index:5;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:rgba(2,5,14,.56);
+  backdrop-filter: blur(5px);
+  border-radius:inherit;
+  pointer-events:all;
+  transition:opacity .49s ease;
+}
+.hidden-overlay{display:none !important;pointer-events:none;}
+
+.overlay-content{
+  background:linear-gradient(165deg,rgb(18,28,63),rgb(51,73,138));
+  border:1px solid rgba(128,178,252,.57);
+  border-radius:26px;
+  padding:34px 34px 59px;
+  max-width:340px;
+  box-shadow:0 61px 91px rgba(0,0,0,.71);
+  animation:fadeUp .69s cubic-bezier(.215,.610,.355,1);
+}
+@keyframes fadeUp{0%{opacity:0;transform:translateY(18px)}100%{}}
+
+.overlay-content h2{margin-top:0;margin-bottom:14px;color:#cfeeff;letter-spacing:1px;font-size:clamp(20px,5vw,27px)}
+.overlay-content p{line-height:1.83;color:#cddef6;font-size:93%;margin-bottom:27px}
+.start-btn{
+  appearance:none;-webkit-appearance:none;
+  background:radial-gradient(#79bbff,#357fe0);
+  border:none;border-radius:999px;
+  color:#04101f;padding:13px 31px;cursor:pointer;
+  font-weight:800;font-size:104%;box-shadow:0 12px 25px rgba(97,157,245,.81);
+  transition:filter .225s,scale .185s;
+}
+.start-btn:hover{filter:saturate(125%) brightness(108%);scale:1.045}
+.start-btn:active{scale:.965}
+
+/* controls hint */
+.controls-info{
+  margin-top:21px;gap:18px;justify-content:center;
+  display:grid;grid-auto-flow:column;align-items:baseline;
+  color:#abcdf2;font-size:86%;background:transparent;
+}
+.controls-info span{border-left:2px dotted rgba(126,176,244,.375);padding-left:11px}
+.controls-info span:first-child{border-left:none;padding-left:0}
