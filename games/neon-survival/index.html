@@ -16,12 +16,29 @@
       <span class="gold-value" id="homeGold">0</span>
       <span class="gold-label">GOLD</span>
     </div>
-    <!-- コード入力（10連ガチャの上） -->
-    <div class="code-row">
-      <input type="text" id="codeInput" class="code-input" placeholder="コードを入力する" maxlength="20" autocomplete="off" />
-      <button class="code-btn" id="codeBtn">入力</button>
+    <!-- クリア報酬とコード入力を分けて表示 -->
+    <div class="reward-code-bar">
+      <section class="clear-rewards" aria-label="クリア報酬">
+        <div class="clear-rewards-title">
+          <span>🏆 NPC撃破報酬</span>
+          <strong>撃破数 <span id="clearCount">0</span>回</strong>
+        </div>
+        <div class="clear-reward-progress-label">↓ 報酬までの進行状況</div>
+        <div class="clear-reward-track">
+          <div class="clear-reward-progress" id="clearRewardProgress"></div>
+          <span class="clear-current-marker" id="clearCurrentMarker">▲</span>
+        </div>
+        <div class="clear-reward-list" id="clearRewardList"></div>
+      </section>
+      <div class="code-reward-side">
+        <span class="code-section-title">コード入力</span>
+        <div class="code-row">
+          <input type="text" id="codeInput" class="code-input" placeholder="コードを入力する" maxlength="20" autocomplete="off" />
+          <button class="code-btn" id="codeBtn">入力</button>
+        </div>
+        <div class="code-msg hidden" id="codeMsg"></div>
+      </div>
     </div>
-    <div class="code-msg hidden" id="codeMsg"></div>
     <!-- ガチャ（ゲームスタートの上） -->
     <div class="gacha-row">
       <button class="gacha-btn" id="gachaBtn">
@@ -49,8 +66,29 @@
       <button class="home-card gold-stage-card" id="goldStageBtn">
         <div class="card-icon">👑</div>
         <div class="card-title">ゴールドステージ</div>
-        <div class="card-desc">1000Gで挑戦！ 全敵ゴールド & 時間制限2分</div>
+        <div class="card-desc">1000Gで挑戦！ 全敵ゴールド & 時間制限100秒</div>
       </button>
+      <div class="npc-card-wrap">
+        <button class="home-card npc-card" id="npcBattleBtn">
+          <div class="card-icon">⚔️</div>
+          <div class="card-title">NPC対戦</div>
+          <div class="card-desc">CPUと1対1で対戦</div>
+        </button>
+        <label class="npc-level-label" for="npcLevelSelect">NPCレベル
+          <select id="npcLevelSelect" class="npc-level-select" aria-label="NPCレベルを選択">
+            <option value="1">レベル 1</option>
+            <option value="2">レベル 2</option>
+            <option value="3">レベル 3</option>
+            <option value="4">レベル 4</option>
+            <option value="5">レベル 5</option>
+            <option value="6">レベル 6</option>
+            <option value="7">レベル 7</option>
+            <option value="8">レベル 8</option>
+            <option value="9">レベル 9</option>
+            <option value="10">レベル 10</option>
+          </select>
+        </label>
+      </div>
     </div>
     <!-- 装備（ゲームスタートの下） -->
     <button class="equip-btn" id="equipBtn">
@@ -58,6 +96,7 @@
       <span class="equip-title">装備</span>
       <span class="equip-desc">装備を確認・変更</span>
     </button>
+    <button class="help-open-btn" id="helpBtn" type="button">❔ 遊び方・ヘルプ</button>
     <div class="equipped-info">
       装備中: <span id="equippedName" class="equipped-name">🔫 ピストル</span>
     </div>
@@ -105,6 +144,7 @@
           <div class="admin-label">🔫 武器・装備の解放</div>
           <button class="admin-btn admin-btn-wide" id="adminUnlockWeaponsBtn">🔫 全武器を解放</button>
           <button class="admin-btn admin-btn-wide" id="adminUnlockEquipBtn">🎒 全装備を解放</button>
+          <button class="admin-btn admin-btn-wide" id="adminUnlockCheatBtn">⚡ チート武器・チート装備を解放</button>
         </div>
         <div class="admin-msg hidden" id="adminMsg"></div>
         <button class="start-btn" id="adminCloseBtn">閉じる</button>
@@ -136,6 +176,62 @@
     <button class="back-btn" id="shopBackBtn">← ホームに戻る</button>
   </div>
 
+  <!-- ═══ ヘルプ画面 ═══ -->
+  <div class="container hidden" id="helpScreen">
+    <h1>❔ 遊び方・ヘルプ</h1>
+    <div class="help-content">
+      <section class="help-section">
+        <h2>🎮 操作方法</h2>
+        <ul>
+          <li>移動：矢印キー または W・A・S・D</li>
+          <li>射撃：スペースキーを押す</li>
+          <li>スマートフォン：画面下の方向ボタンと射撃ボタン</li>
+        </ul>
+      </section>
+      <section class="help-section">
+        <h2>🧟 ゲームの進め方</h2>
+        <ul>
+          <li>敵を避けながら射撃し、できるだけ長く生き残ろう。</li>
+          <li>通常ステージは100秒間生き残るとクリア。HPがなくなるとゲームオーバー。</li>
+          <li>敵を倒してコインやパワーアップを集め、ゴールドをためよう。</li>
+          <li>クリア回数の節目を達成すると、ゴールド報酬を自動で獲得できます。</li>
+          <li>ダメージを受けた時やHPが回復した時は、残りHPがプレイヤーの周囲に一時表示される。</li>
+        </ul>
+      </section>
+      <section class="help-section">
+        <h2>👑 ゴールドステージ</h2>
+        <ul>
+          <li>制限時間は100秒。HPは無制限です。</li>
+          <li>初回は無料、2回目以降は1回につき1000Gが必要です。</li>
+        </ul>
+      </section>
+      <section class="help-section">
+        <h2>⚔️ NPC対戦</h2>
+        <ul>
+          <li>ホーム画面でNPCレベルを選び、「NPC対戦」を開始できます。</li>
+          <li>NPCを倒すと撃破数とクリア報酬が加算されます。</li>
+          <li>NPC対戦をクリアしてもボーナスコードは公開されません。</li>
+        </ul>
+      </section>
+      <section class="help-section">
+        <h2>🎁 ボーナスコード</h2>
+        <ul>
+          <li>通常ステージをクリアすると、公開コードが1回につき1個ずつ表示されます。</li>
+          <li>表示されたコードはホーム画面の「コード入力」欄に入力できます。</li>
+          <li>ゴールドステージとNPC対戦ではコードは公開されません。</li>
+        </ul>
+      </section>
+      <section class="help-section">
+        <h2>🏪 武器・装備・ガチャ</h2>
+        <ul>
+          <li>ショップで武器を購入し、装備画面で武器や装備を切り替えられます。</li>
+          <li>ガチャは1回50G、10連は500G。装備アイテムを獲得できます。</li>
+        </ul>
+      </section>
+    </div>
+    <button class="back-btn" id="helpBackBtn" type="button">← ホームに戻る</button>
+  </div>
+
   <!-- ═══ ゲーム画面 ═══ -->
   <div class="container hidden" id="gameScreen">
     <h1>🧟 ネオンサバイバル</h1>
@@ -143,10 +239,6 @@
       <div class="info">
         <span class="label">スコア</span>
         <span class="value" id="score">0</span>
-      </div>
-      <div class="info">
-        <span class="label">HP</span>
-        <div class="value hp-bar" id="hp"></div>
       </div>
       <div class="info">
         <span class="label">ウェーブ</span>
@@ -180,15 +272,18 @@
       <span>💥 スペースで射撃</span>
     </div>
     <button class="game-home-btn" id="gameHomeBtn">🏠 ホームに戻る</button>
-    <div class="mobile-controls" id="mobileControls">
-      <button class="ctrl-btn" id="btnUp">▲</button>
-      <div class="ctrl-row">
-        <button class="ctrl-btn" id="btnLeft">◀</button>
-        <button class="ctrl-btn" id="btnDown">▼</button>
-        <button class="ctrl-btn" id="btnRight">▶</button>
+    <div class="mobile-controls" id="mobileControls" aria-label="タッチ操作">
+      <div class="mobile-dpad" aria-label="移動">
+        <button class="ctrl-btn" id="btnUp" type="button" aria-label="上へ移動">▲</button>
+        <div class="ctrl-row">
+          <button class="ctrl-btn" id="btnLeft" type="button" aria-label="左へ移動">◀</button>
+          <button class="ctrl-btn" id="btnDown" type="button" aria-label="下へ移動">▼</button>
+          <button class="ctrl-btn" id="btnRight" type="button" aria-label="右へ移動">▶</button>
+        </div>
       </div>
+      <button class="ctrl-btn shoot-btn" id="btnShoot" type="button" aria-label="押して射撃">💥<span>射撃</span></button>
     </div>
   </div>
-  <script src="neon-survival.js?v=20"></script>
+  <script src="neon-survival.js?v=24"></script>
 </body>
 </html>

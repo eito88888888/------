@@ -19,13 +19,27 @@
       <p class="intro">遊びたいゲームを選ぼう。アーカイブ作品も、いつでもプレイ・編集できます。</p>
     </header>
 
+    <section class="portal-quick-access" aria-label="ゲームポータルのQRコード">
+      <div>
+        <div class="qr-panel">
+          <img src="game-portal-qr.png" alt="ゲームポータルのQRコード" aria-label="ゲームポータルのQRコード" />
+        </div>
+        <div class="qr-url" id="portal-url">file:///C:/Users/fullm/Desktop/えいとゲーム/index.html</div>
+      </div>
+      <div class="qr-copy">
+        <p><strong>スマホで読み取るとすぐ開ける</strong></p>
+        <p>このQRコードを読み取れば、ゲームポータルのトップページに直接移動できます。</p>
+        <a href="index.html">ゲームポータルを開く <span aria-hidden="true">↗</span></a>
+      </div>
+    </section>
+
     <section class="collection" aria-labelledby="current-heading">
       <div class="section-heading">
         <div>
           <p class="section-kicker">LATEST BUILD</p>
           <h2 id="current-heading">現行ゲーム</h2>
         </div>
-        <span class="count">01 GAME</span>
+        <span class="count">02 GAMES</span>
       </div>
       <div class="game-grid">
         <article class="game-card featured">
@@ -38,6 +52,18 @@
           <p class="folder"><span>編集フォルダー</span><code>games/neon-survival/</code></p>
           <a class="play-link" href="games/neon-survival/index.html" target="_blank" rel="noopener">ゲームをプレイ <span aria-hidden="true">↗</span></a>
           <a class="edit-link" data-source="games/neon-survival/neon-survival.js">VS Codeでソースを編集 <span aria-hidden="true">↗</span></a>
+        </article>
+
+        <article class="game-card featured">
+          <div class="card-top">
+            <span class="game-icon" aria-hidden="true">🧍</span>
+            <span class="status current">NEW</span>
+          </div>
+          <h3>不死の村人</h3>
+          <p class="description">身体を切り離して2段ジャンプ、縮んで隠し通路を進む不死のアクションゲーム。</p>
+          <p class="folder"><span>編集フォルダー</span><code>games/new-game/</code></p>
+          <a class="play-link" href="games/new-game/index.html" target="_blank" rel="noopener">ゲームをプレイ <span aria-hidden="true">↗</span></a>
+          <a class="edit-link" data-source="games/new-game/game.js">VS Codeでソースを編集 <span aria-hidden="true">↗</span></a>
         </article>
       </div>
     </section>
@@ -119,6 +145,11 @@
     </footer>
   </main>
   <script>
+    const portalUrlText = document.getElementById("portal-url");
+    if (portalUrlText) {
+      portalUrlText.textContent = window.location.href;
+    }
+
     document.querySelectorAll(".edit-link").forEach((link) => {
       const source = new URL(link.dataset.source, window.location.href);
       if (window.location.protocol === "file:") {

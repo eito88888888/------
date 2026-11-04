@@ -19,6 +19,7 @@
     { id: 'plasma',   name: 'プラズマキャノン',   damage: 6,   fireRate: 0.5, range: 1.2, cost: 180, color: '#c46bff', bulletR: 7, icon: '🔮', desc: '広範囲にダメージ' },
     { id: 'gatling',  name: 'ガトリングガン',     damage: 2,   fireRate: 6,   range: 0.8, cost: 200, color: '#ff6a6a', bulletR: 3, icon: '🔫', desc: '最速の弾幕を形成' },
     { id: 'mega',     name: 'メガブラスター',     damage: 15,  fireRate: 0.05, range: 1.5, cost: 300, color: '#ff4ce0', bulletR: 9, icon: '💥', desc: '究極の破壊力！' },
+    { id: 'cheat_blaster', name: 'チートブラスター', damage: 999, fireRate: 20, range: 99, cost: 0, color: '#ffffff', bulletR: 12, icon: '⚡', desc: '管理者専用・超高火力連射', adminOnly: true },
   ];
 
   // ── ガチャ・装備定義 ─────────────────────
@@ -31,7 +32,7 @@
     { id: 'speed_boots',   name: 'スピードブーツ',           slot: 'boots',    icon: '👢', desc: 'スピードが1.5倍',   effect: { type: 'speed',  mult: 1.5 }, rarity: 'common' },
     { id: 'power_potion',  name: 'パワーアップポーション',   slot: 'support',  icon: '🧪', desc: '攻撃力が1.5倍',     effect: { type: 'damage', mult: 1.5 }, rarity: 'common' },
     // ドラゴン装備（レア）
-    { id: 'dragon_helmet',   name: 'ドラゴンヘルメット',       slot: 'helmet',   icon: '🐉', desc: '最大HP+2',       effect: { type: 'maxhp',  mult: 2 }, rarity: 'rare' },
+    { id: 'dragon_helmet',   name: 'ドラゴンヘルメット',       slot: 'helmet',   icon: '🐉', desc: '最大HP+3',       effect: { type: 'maxhp',  mult: 3 }, rarity: 'rare' },
     { id: 'dragon_chest',    name: 'ドラゴンチェストプレート', slot: 'chest',    icon: '🐉', desc: '被ダメージ45%軽減', effect: { type: 'armor',  mult: 0.45 }, rarity: 'rare' },
     { id: 'dragon_leggings', name: 'ドラゴンレギンス',         slot: 'leggings', icon: '🐲', desc: '弾の射程2倍',     effect: { type: 'range',  mult: 2 }, rarity: 'rare' },
     { id: 'dragon_boots',    name: 'ドラゴンブーツ',           slot: 'boots',    icon: '🐉', desc: 'スピードが2倍',   effect: { type: 'speed',  mult: 2 }, rarity: 'rare' },
@@ -43,11 +44,17 @@
     { id: 'knight_boots',    name: 'ナイトブーツ',           slot: 'boots',    icon: '🥾', desc: 'スピードが1.75倍', effect: { type: 'speed',  mult: 1.75 }, rarity: 'common' },
     { id: 'regen_potion',    name: 'リジェネポーション',     slot: 'support',  icon: '💚', desc: '時間でHP回復',     effect: { type: 'regen',  mult: 1 }, rarity: 'common' },
     // ゴールド装備（レア）
-    { id: 'gold_helmet',   name: 'ゴールドヘルメット',       slot: 'helmet',   icon: '👑', desc: '最大HP+3',       effect: { type: 'maxhp',  mult: 3 }, rarity: 'rare' },
-    { id: 'gold_chest',    name: 'ゴールドチェストプレート', slot: 'chest',    icon: '👑', desc: '被ダメージ50%軽減', effect: { type: 'armor',  mult: 0.5 }, rarity: 'rare' },
-    { id: 'gold_leggings', name: 'ゴールドレギンス',         slot: 'leggings', icon: '👑', desc: '弾の射程2.5倍',     effect: { type: 'range',  mult: 2.5 }, rarity: 'rare' },
-    { id: 'gold_boots',    name: 'ゴールドブーツ',           slot: 'boots',    icon: '👑', desc: 'スピードが2.5倍',   effect: { type: 'speed',  mult: 2.5 }, rarity: 'rare' },
-    { id: 'gold_potion',   name: 'ゴールドポーション',       slot: 'support',  icon: '✨', desc: '時間でHP回復（大）', effect: { type: 'regen',  mult: 2 }, rarity: 'rare' },
+    { id: 'gold_helmet',   name: 'ゴールドヘルメット',       slot: 'helmet',   icon: '👑', desc: '最大HP+4',       effect: { type: 'maxhp',  mult: 4 }, rarity: 'special', special: true },
+    { id: 'gold_chest',    name: 'ゴールドチェストプレート', slot: 'chest',    icon: '👑', desc: '被ダメージ50%軽減', effect: { type: 'armor',  mult: 0.5 }, rarity: 'special', special: true },
+    { id: 'gold_leggings', name: 'ゴールドレギンス',         slot: 'leggings', icon: '👑', desc: '弾の射程2.5倍',     effect: { type: 'range',  mult: 2.5 }, rarity: 'special', special: true },
+    { id: 'gold_boots',    name: 'ゴールドブーツ',           slot: 'boots',    icon: '👑', desc: 'スピードが2.5倍',   effect: { type: 'speed',  mult: 2.5 }, rarity: 'special', special: true },
+    { id: 'gold_potion',   name: 'ゴールドポーション',       slot: 'support',  icon: '✨', desc: '時間でHP回復（大）', effect: { type: 'regen',  mult: 2 }, rarity: 'special', special: true },
+    // 管理者専用チート装備
+    { id: 'cheat_helmet', name: 'チートヘルメット', slot: 'helmet', icon: '⚡', desc: '最大HP+8', effect: { type: 'maxhp', mult: 8 }, rarity: 'cheat', special: true, adminOnly: true },
+    { id: 'cheat_chest', name: 'チートアーマー', slot: 'chest', icon: '⚡', desc: '被ダメージ70%軽減', effect: { type: 'armor', mult: 0.70 }, rarity: 'cheat', special: true, adminOnly: true },
+    { id: 'cheat_leggings', name: 'チートレギンス', slot: 'leggings', icon: '⚡', desc: '弾の射程3倍', effect: { type: 'range', mult: 3 }, rarity: 'cheat', special: true, adminOnly: true },
+    { id: 'cheat_boots', name: 'チートブーツ', slot: 'boots', icon: '⚡', desc: 'スピード3倍', effect: { type: 'speed', mult: 3 }, rarity: 'cheat', special: true, adminOnly: true },
+    { id: 'cheat_potion', name: 'チートポーション', slot: 'support', icon: '⚡', desc: '攻撃力5倍', effect: { type: 'damage', mult: 5 }, rarity: 'cheat', special: true, adminOnly: true },
   ];
   const EQUIP_SLOTS = [
     { id: 'helmet',  name: 'ヘルメット',       icon: '🪖' },
@@ -63,14 +70,18 @@
   const PLAYER_R        = 14;
   const PLAYER_SPEED    = 260;
   const MAX_HP          = 3;
+  const HP_DISPLAY_DURATION = 1800;
+  const BARRIER_DURATION = 900;
   const BULLET_SPEED    = 420;
   const POWERUP_CHANCE  = 0.08;
+  const ENEMY_HP_MULT    = 1.5;
 
   // ── DOM ──────────────────────────────────
   const homeScreen   = document.getElementById('homeScreen');
   const shopScreen   = document.getElementById('shopScreen');
   const gameScreen   = document.getElementById('gameScreen');
   const equipScreen  = document.getElementById('equipScreen');
+  const helpScreen   = document.getElementById('helpScreen');
   const shopBtn      = document.getElementById('shopBtn');
   const homeStartBtn = document.getElementById('homeStartBtn');
   const shopBackBtn  = document.getElementById('shopBackBtn');
@@ -88,6 +99,8 @@
   const chestTextEl  = document.getElementById('chestText');
   const equipBtn     = document.getElementById('equipBtn');
   const equipBackBtn = document.getElementById('equipBackBtn');
+  const helpBtn      = document.getElementById('helpBtn');
+  const helpBackBtn  = document.getElementById('helpBackBtn');
   const equipGoldEl  = document.getElementById('equipGold');
   const equipListEl  = document.getElementById('equipList');
   const canvas       = document.getElementById('gameCanvas');
@@ -99,13 +112,14 @@
   const overlayMsg   = document.getElementById('overlayText');
   const gameOverBtn  = document.getElementById('gameOverBtn');
   const ui_score     = document.getElementById('score');
-  const ui_hp        = document.getElementById('hp');
   const ui_wave      = document.getElementById('wave');
   const ui_gold      = document.getElementById('gold');
   const ui_hiscore   = document.getElementById('highscore');
   const resetBtn     = document.getElementById('resetBtn');
   const gameHomeBtn  = document.getElementById('gameHomeBtn');
   const goldStageBtn = document.getElementById('goldStageBtn');
+  const npcBattleBtn = document.getElementById('npcBattleBtn');
+  const npcLevelSelect = document.getElementById('npcLevelSelect');
   const timerInfoEl  = document.getElementById('timerInfo');
   const timerEl      = document.getElementById('timer');
   const codeInput    = document.getElementById('codeInput');
@@ -116,9 +130,14 @@
   const adminGoldSetBtn   = document.getElementById('adminGoldSetBtn');
   const adminUnlockWeaponsBtn = document.getElementById('adminUnlockWeaponsBtn');
   const adminUnlockEquipBtn   = document.getElementById('adminUnlockEquipBtn');
+  const adminUnlockCheatBtn   = document.getElementById('adminUnlockCheatBtn');
   const adminCloseBtn     = document.getElementById('adminCloseBtn');
   const adminMsg          = document.getElementById('adminMsg');
   const skinBtn       = document.getElementById('skinBtn');
+  const clearCountEl  = document.getElementById('clearCount');
+  const clearRewardList = document.getElementById('clearRewardList');
+  const clearRewardProgress = document.getElementById('clearRewardProgress');
+  const clearCurrentMarker = document.getElementById('clearCurrentMarker');
 
   // ── 永続データ ───────────────────────────
   let gold           = Number(localStorage.getItem('survivalGold') || 0);
@@ -129,6 +148,18 @@
   let equippedEquipment = JSON.parse(localStorage.getItem('survivalEquipEquipped') || '{}');
   let goldFreeUsed = localStorage.getItem('survivalGoldFreeUsed') === '1';
   var goldFreeSession = false; // 初回無料セッション中かどうか
+  let clearCount = Number(localStorage.getItem('survivalClearCount') || 0);
+  let clearedRewards = JSON.parse(localStorage.getItem('survivalClearRewards') || '[]');
+  const CLEAR_REWARDS = [
+    { count: 1,  gold: 100 },
+    { count: 3,  gold: 300 },
+    { count: 5,  gold: 500 },
+    { count: 10, gold: 1000 },
+    { count: 20, gold: 2000 },
+    { count: 30, gold: 3000 },
+    { count: 50, gold: 5000 },
+    { count: 100, gold: 10000 },
+  ];
   const SKIN_ORDER = ['anime', 'classic', 'neon'];
   const SKIN_LABELS = { anime: 'アニメ', classic: 'クラシック', neon: 'ネオン' };
   var skinStyle = localStorage.getItem('survivalSkin') || 'anime';
@@ -139,12 +170,31 @@
   // ── コード ───────────────────────────────
   const CODES = {
     'NEON1000':  { gold: 1000,  label: '1000G' },
-    'ZOMBIE500': { gold: 500,   label: '500G' },
+    'ZOMBIE500': { gold: 1000,  label: '1000G' },
     'GOLD10000': { gold: 10000, label: '10000G' },
     'GOD':       { admin: true, label: '管理者' },
   };
+  let revealedCodeCount = Number(localStorage.getItem('survivalRevealedCodes') || 0);
   let usedCodes = JSON.parse(localStorage.getItem('survivalCodes') || '[]');
   function saveUsedCodes() { localStorage.setItem('survivalCodes', JSON.stringify(usedCodes)); }
+  function getPublicCodeList() {
+    return Object.keys(CODES).filter(function (code) {
+      return !CODES[code].admin;
+    }).map(function (code) {
+      return code === 'ZOMBIE500' ? 'ゾンビ / ZOMBIE500' : code;
+    });
+  }
+  function revealNextCode() {
+    var publicCodes = getPublicCodeList();
+    if (revealedCodeCount < publicCodes.length) {
+      revealedCodeCount++;
+      localStorage.setItem('survivalRevealedCodes', String(revealedCodeCount));
+    }
+    return publicCodes.slice(0, revealedCodeCount);
+  }
+  function getRevealedCodeList() {
+    return getPublicCodeList().slice(0, revealedCodeCount);
+  }
   function showCodeMsg(text, ok) {
     codeMsg.textContent = text;
     codeMsg.classList.remove('hidden', 'ok', 'err');
@@ -154,6 +204,7 @@
   }
   function redeemCode() {
     var code = (codeInput.value || '').trim().normalize('NFKC').toUpperCase();
+    if (code === 'ゾンビ' || code === 'ゾンビ500' || code === 'ZOMBIE') code = 'ZOMBIE500';
     if (!code) { showCodeMsg('コードを入力してください', false); return; }
     if (usedCodes.indexOf(code) >= 0) { showCodeMsg('このコードは使用済みです', false); return; }
     var item = CODES[code];
@@ -161,6 +212,7 @@
     codeInput.value = '';
     // 管理者コードは何度でも使える（使用済みにしない）
     if (item.admin) {
+      unlockAdminCheats();
       openAdminPanel();
       return;
     }
@@ -206,6 +258,20 @@
     saveOwnedEquip();
     showAdminMsg('🎒 全装備を解放しました', true);
   }
+  function unlockAdminCheats() {
+    WEAPONS.filter(function (w) { return w.adminOnly; }).forEach(function (weapon) {
+      if (ownedWeapons.indexOf(weapon.id) === -1) ownedWeapons.push(weapon.id);
+    });
+    GACHA_ITEMS.filter(function (it) { return it.adminOnly; }).forEach(function (item) {
+      if (ownedEquipment.indexOf(item.id) === -1) ownedEquipment.push(item.id);
+    });
+    saveOwned();
+    saveOwnedEquip();
+  }
+  function adminUnlockCheats() {
+    unlockAdminCheats();
+    showAdminMsg('⚡ チート武器・チート装備を解放しました', true);
+  }
   function toggleSkin() {
     var index = SKIN_ORDER.indexOf(skinStyle);
     var nextIndex = (index + 1) % SKIN_ORDER.length;
@@ -216,10 +282,62 @@
 
   function getWeapon() { return WEAPONS.find(w => w.id === equippedId) || WEAPONS[0]; }
   function saveGold() { localStorage.setItem('survivalGold', String(gold)); }
+  function saveClearRewards() {
+    localStorage.setItem('survivalClearCount', String(clearCount));
+    localStorage.setItem('survivalClearRewards', JSON.stringify(clearedRewards));
+  }
+  function awardClearRewards() {
+    clearCount++;
+    var earned = [];
+    CLEAR_REWARDS.forEach(function (reward) {
+      if (clearCount >= reward.count && clearedRewards.indexOf(reward.count) === -1) {
+        clearedRewards.push(reward.count);
+        gold += reward.gold;
+        earned.push(reward);
+      }
+    });
+    if (clearCount >= 10) {
+      GACHA_ITEMS.filter(function (it) { return it.special && !it.adminOnly; }).forEach(function (item) {
+        if (ownedEquipment.indexOf(item.id) === -1) ownedEquipment.push(item.id);
+      });
+      saveOwnedEquip();
+    }
+    saveClearRewards();
+    saveGold();
+    return earned;
+  }
+  function renderClearRewards() {
+    clearCountEl.textContent = clearCount;
+    var progress = Math.min(100, clearCount / 100 * 100);
+    clearRewardProgress.style.width = progress + '%';
+    clearCurrentMarker.style.left = progress + '%';
+    clearCurrentMarker.title = '現在NPC撃破 ' + clearCount + '回';
+    clearRewardList.innerHTML = CLEAR_REWARDS.map(function (reward) {
+      var claimed = clearedRewards.indexOf(reward.count) !== -1;
+      var className = claimed ? 'claimed' : (clearCount >= reward.count ? 'ready' : 'locked');
+      var goldEquipmentBonus = reward.count === 10 ? '<br><small>👑 ゴールド装備</small>' : '';
+      var status = claimed ? '獲得済み' : (clearCount >= reward.count ? '獲得可能' : clearCount + '/' + reward.count);
+      return '<div class="clear-reward-item ' + className + '">' +
+        '<span>撃破 ' + reward.count + '回</span>' +
+        '<strong>' + reward.gold.toLocaleString() + 'G' + goldEquipmentBonus + '</strong>' +
+        '<small>' + status + '</small></div>';
+    }).join('');
+  }
   function saveOwned() { localStorage.setItem('survivalWeapons', JSON.stringify(ownedWeapons)); }
   function saveEquipped() { localStorage.setItem('survivalEquipped', equippedId); }
   function saveOwnedEquip() { localStorage.setItem('survivalEquipOwned', JSON.stringify(ownedEquipment)); }
   function saveEquippedEquip() { localStorage.setItem('survivalEquipEquipped', JSON.stringify(equippedEquipment)); }
+  function unlockGoldEquipment() {
+    if (clearCount < 10) return;
+    var changed = false;
+    GACHA_ITEMS.filter(function (it) { return it.special && !it.adminOnly; }).forEach(function (item) {
+      if (ownedEquipment.indexOf(item.id) === -1) {
+        ownedEquipment.push(item.id);
+        changed = true;
+      }
+    });
+    if (changed) saveOwnedEquip();
+  }
 
   // 装備効果の取得
   function getEquipSpeedMult() {
@@ -261,9 +379,66 @@
   function getMaxHp() {
     return MAX_HP + getEquipMaxHpBonus();
   }
+  function getEquippedItem(slot) {
+    var id = equippedEquipment[slot];
+    return id ? GACHA_ITEMS.find(function (item) { return item.id === id; }) || null : null;
+  }
+  function getEquipmentColor(item, fallback) {
+    if (!item) return fallback;
+    if (item.rarity === 'special') return '#ffd040';
+    if (item.rarity === 'cheat') return '#d66cff';
+    if (item.rarity === 'rare') return '#ff7b45';
+    return '#50d9ff';
+  }
+
+  // ── 装備ごとの外見オーバレイ ─────────────────────────
+  function drawEquipmentVisual() {
+    var helmet = getEquippedItem('helmet');
+    var chest = getEquippedItem('chest');
+    var leggings = getEquippedItem('leggings');
+    var boots = getEquippedItem('boots');
+    var support = getEquippedItem('support');
+    ctx.save();
+    ctx.translate(player.x, player.y);
+
+    if (helmet) {
+      var helmetColor = getEquipmentColor(helmet, '#50d9ff');
+      ctx.fillStyle = helmetColor;
+      ctx.strokeStyle = helmet.rarity === 'cheat' ? '#ffd6ff' : '#fff';
+      ctx.lineWidth = 1.5;
+      ctx.beginPath(); ctx.arc(0, -17, 10, Math.PI, 0); ctx.lineTo(10, -13); ctx.lineTo(-10, -13); ctx.closePath(); ctx.fill(); ctx.stroke();
+      ctx.fillStyle = '#fff'; ctx.font = 'bold 8px sans-serif'; ctx.textAlign = 'center';
+      ctx.fillText(helmet.icon, 0, -13);
+    }
+    if (chest) {
+      var chestColor = getEquipmentColor(chest, '#50d9ff');
+      ctx.strokeStyle = chestColor; ctx.lineWidth = chest.rarity === 'special' || chest.rarity === 'cheat' ? 4 : 3;
+      ctx.shadowColor = chestColor; ctx.shadowBlur = 8;
+      ctx.beginPath(); ctx.arc(0, 0, PLAYER_R + 1, 0.55, Math.PI - 0.55); ctx.stroke();
+      ctx.shadowBlur = 0;
+    }
+    if (leggings) {
+      ctx.strokeStyle = getEquipmentColor(leggings, '#50d9ff'); ctx.lineWidth = 4;
+      ctx.beginPath(); ctx.moveTo(-5, 8); ctx.lineTo(-5, 15); ctx.moveTo(5, 8); ctx.lineTo(5, 15); ctx.stroke();
+    }
+    if (boots) {
+      var bootColor = getEquipmentColor(boots, '#50d9ff');
+      ctx.fillStyle = bootColor;
+      ctx.fillRect(-9, 13, 7, 4); ctx.fillRect(2, 13, 7, 4);
+      ctx.fillStyle = '#fff'; ctx.font = 'bold 7px sans-serif'; ctx.textAlign = 'center';
+      ctx.fillText('×' + boots.effect.mult, 0, 22);
+    }
+    if (support) {
+      var supportColor = getEquipmentColor(support, '#4cff6a');
+      ctx.strokeStyle = supportColor; ctx.lineWidth = 2.5; ctx.shadowColor = supportColor; ctx.shadowBlur = 10;
+      ctx.beginPath(); ctx.arc(-14, 0, 5, 0, Math.PI * 2); ctx.stroke(); ctx.shadowBlur = 0;
+      ctx.fillStyle = supportColor; ctx.font = 'bold 9px sans-serif'; ctx.textAlign = 'center'; ctx.fillText(support.icon, -14, 3);
+    }
+    ctx.restore();
+  }
 
   // ── ゲーム内状態 ─────────────────────────
-  var player = { x: W/2, y: H/2, hp: MAX_HP, invulnUntil: 0, fireCooldown: 0, speedMult: 1, rapidUntil: 0 };
+  var player = { x: W/2, y: H/2, hp: MAX_HP, invulnUntil: 0, hpDisplayUntil: 0, barrierUntil: 0, fireCooldown: 0, speedMult: 1, rapidUntil: 0 };
   var bullets = [];
   var enemies = [];
   var powerups = [];
@@ -274,9 +449,11 @@
   var gameState = 'home'; // 'home' | 'shop' | 'playing' | 'dead'
 
   // ゴールドステージ用
-  var gameMode = 'normal'; // 'normal' | 'gold'
-  var goldStageTimer = 120;
-  var normalTimer = 180;
+  var gameMode = 'normal'; // 'normal' | 'gold' | 'npc'
+  var npcLevel = Math.max(1, Math.min(10, Number(localStorage.getItem('survivalNpcLevel') || 1)));
+  var npc = { x: W - 120, y: H / 2, hp: 20, maxHp: 20, fireCooldown: 0, hitUntil: 0, speed: 115, damage: 1 };
+  var goldStageTimer = 100;
+  var normalTimer = 100;
 
   // ── キー操作 ─────────────────────────────
   const pressedKeys = {};
@@ -288,6 +465,11 @@
     }
   });
   window.addEventListener('keyup', function (e) { delete pressedKeys[e.code]; });
+  window.addEventListener('blur', function () {
+    mobileDir.x = 0;
+    mobileDir.y = 0;
+    delete pressedKeys.Space;
+  });
 
   // ── モバイル操作 ─────────────────────────
   var mobileMap = { btnUp:{x:0,y:-1}, btnDown:{x:0,y:1}, btnLeft:{x:-1,y:0}, btnRight:{x:1,y:0} };
@@ -300,10 +482,34 @@
       if (on) { mobileDir.x = d.x; mobileDir.y = d.y; }
       else if (mobileDir.x === d.x && mobileDir.y === d.y) { mobileDir.x = 0; mobileDir.y = 0; }
     }
-    el.addEventListener('pointerdown', function (e) { e.preventDefault(); apply(true); });
-    el.addEventListener('pointerup',   function (e) { e.preventDefault(); apply(false); });
-    el.addEventListener('pointerleave',function (e) { e.preventDefault(); apply(false); });
+    el.addEventListener('pointerdown', function (e) {
+      e.preventDefault();
+      el.setPointerCapture(e.pointerId);
+      apply(true);
+    });
+    function release(e) {
+      e.preventDefault();
+      apply(false);
+    }
+    el.addEventListener('pointerup', release);
+    el.addEventListener('pointercancel', release);
+    el.addEventListener('lostpointercapture', function () { apply(false); });
   });
+  var shootButton = document.getElementById('btnShoot');
+  if (shootButton) {
+    shootButton.addEventListener('pointerdown', function (e) {
+      e.preventDefault();
+      shootButton.setPointerCapture(e.pointerId);
+      pressedKeys.Space = true;
+    });
+    function stopMobileShooting(e) {
+      e.preventDefault();
+      delete pressedKeys.Space;
+    }
+    shootButton.addEventListener('pointerup', stopMobileShooting);
+    shootButton.addEventListener('pointercancel', stopMobileShooting);
+    shootButton.addEventListener('lostpointercapture', function () { delete pressedKeys.Space; });
+  }
 
   // ── ユーティリティ ───────────────────────
   function clamp(v, lo, hi) { return v < lo ? lo : v > hi ? hi : v; }
@@ -318,6 +524,7 @@
     shopScreen.classList.toggle('hidden', name !== 'shop');
     gameScreen.classList.toggle('hidden', name !== 'game');
     equipScreen.classList.toggle('hidden', name !== 'equip');
+    helpScreen.classList.toggle('hidden', name !== 'help');
   }
 
   function goToHome() {
@@ -339,8 +546,22 @@
     buildEquip();
   }
 
+  function goToHelp() {
+    gameState = 'help';
+    showScreen('help');
+  }
+
   function goToGame() {
     gameMode = 'normal';
+    showScreen('game');
+    gameState = 'playing';
+    startGame();
+  }
+
+  function goToNpcBattle() {
+    gameMode = 'npc';
+    npcLevel = Math.max(1, Math.min(10, Number(npcLevelSelect.value) || 1));
+    localStorage.setItem('survivalNpcLevel', String(npcLevel));
     showScreen('game');
     gameState = 'playing';
     startGame();
@@ -369,6 +590,9 @@
   // ═══════════════════════════════════════
   function updateHomeUI() {
     homeGoldEl.textContent = gold;
+    unlockGoldEquipment();
+    renderClearRewards();
+    npcLevelSelect.value = String(npcLevel);
     var w = getWeapon();
     equippedNameEl.textContent = w.icon + ' ' + w.name;
     equippedNameEl.style.color = w.color;
@@ -376,13 +600,13 @@
     // ゴールドステージボタンの状態
     if (!goldFreeUsed) {
       goldStageBtn.classList.remove('locked');
-      goldStageBtn.querySelector('.card-desc').textContent = '初回無料！ 全敵ゴールド & 時間制限2分';
+      goldStageBtn.querySelector('.card-desc').textContent = '初回無料！ 全敵ゴールド & 時間制限100秒';
     } else if (gold >= 1000) {
       goldStageBtn.classList.remove('locked');
-      goldStageBtn.querySelector('.card-desc').textContent = '1000Gで挑戦！ 全敵ゴールド & 時間制限2分';
+      goldStageBtn.querySelector('.card-desc').textContent = '1000Gで挑戦！ 全敵ゴールド & 時間制限100秒';
     } else {
       goldStageBtn.classList.add('locked');
-      goldStageBtn.querySelector('.card-desc').textContent = '1000Gで挑戦！ 全敵ゴールド & 時間制限2分';
+      goldStageBtn.querySelector('.card-desc').textContent = '1000Gで挑戦！ 全敵ゴールド & 時間制限100秒';
     }
 
     // ガチャボタンの状態
@@ -405,6 +629,7 @@
     shopGoldEl.textContent = gold;
     shopListEl.innerHTML = '';
     WEAPONS.forEach(function (w) {
+      if (w.adminOnly && ownedWeapons.indexOf(w.id) === -1) return;
       var owned    = ownedWeapons.indexOf(w.id) !== -1;
       var equipped = w.id === equippedId;
 
@@ -465,16 +690,17 @@
   //  ガチャ
   // ═══════════════════════════════════════
   function rollGachaItem() {
-    // レア度による重み付き抽選（レアは低確率）
+    // レア度による重み付き抽選（ゴールド装備はクリア報酬専用）
+    var gachaItems = GACHA_ITEMS.filter(function (it) { return !it.special; });
     var totalWeight = 0;
-    GACHA_ITEMS.forEach(function (it) {
+    gachaItems.forEach(function (it) {
       totalWeight += it.rarity === 'rare' ? 1 : 3;
     });
     var roll = Math.random() * totalWeight;
-    var item = GACHA_ITEMS[0];
-    for (var i = 0; i < GACHA_ITEMS.length; i++) {
-      roll -= GACHA_ITEMS[i].rarity === 'rare' ? 1 : 3;
-      if (roll <= 0) { item = GACHA_ITEMS[i]; break; }
+    var item = gachaItems[0];
+    for (var i = 0; i < gachaItems.length; i++) {
+      roll -= gachaItems[i].rarity === 'rare' ? 1 : 3;
+      if (roll <= 0) { item = gachaItems[i]; break; }
     }
     return item;
   }
@@ -493,7 +719,7 @@
     var rareGuarantee = count > 1;
     var guaranteedRare = null;
     if (rareGuarantee) {
-      var rareItems = GACHA_ITEMS.filter(function (it) { return it.rarity === 'rare'; });
+      var rareItems = GACHA_ITEMS.filter(function (it) { return it.rarity === 'rare' && !it.special; });
       guaranteedRare = rareItems[Math.floor(Math.random() * rareItems.length)];
     }
 
@@ -641,7 +867,7 @@
   //  ゲーム開始 / ゲームオーバー
   // ═══════════════════════════════════════
   function startGame() {
-    player     = { x: W/2, y: H/2, hp: getMaxHp(), invulnUntil: 0, fireCooldown: 0, speedMult: 1, rapidUntil: 0, equipSpeedMult: getEquipSpeedMult(), regenTimer: 0 };
+    player     = { x: W/2, y: H/2, hp: getMaxHp(), invulnUntil: 0, hpDisplayUntil: 0, barrierUntil: 0, fireCooldown: 0, speedMult: 1, rapidUntil: 0, equipSpeedMult: getEquipSpeedMult(), regenTimer: 0 };
     bullets    = [];
     enemies    = [];
     powerups   = [];
@@ -654,11 +880,19 @@
     shakeTimer = 0;
     flashAlpha = 0;
     frameCount = 0;
-    goldStageTimer = 120;
-    normalTimer = 180;
+    goldStageTimer = 100;
+    normalTimer = 100;
 
-    // ゴールドステージモード
-    if (gameMode === 'gold') {
+    // モード別初期化
+    if (gameMode === 'npc') {
+      var npcHp = 20 + (npcLevel - 1) * 8;
+      npc = {
+        x: W - 120, y: H / 2, hp: npcHp, maxHp: npcHp, fireCooldown: 0, hitUntil: 0,
+        speed: 115 + (npcLevel - 1) * 12,
+        damage: 1 + Math.floor((npcLevel - 1) / 3)
+      };
+      timerInfoEl.classList.add('hidden');
+    } else if (gameMode === 'gold') {
       player.hp = 999999;
       timerInfoEl.classList.remove('hidden');
     } else {
@@ -681,7 +915,7 @@
     saveGold();
 
     if (gameMode === 'gold') {
-      // ゴールドステージ: 時間切れでクリア
+      // ゴールドステージ
       var bonus = Math.floor(survivalTime) * 5;
       gold += bonus;
       saveGold();
@@ -695,15 +929,17 @@
     } else if (cleared) {
       // 通常モード: タイムアップでクリア
       var bonus = Math.floor(survivalTime) * 3;
+      revealNextCode();
       gold += bonus;
       saveGold();
       burst(player.x, player.y, '#ffd040', 30);
       overlayTtl.textContent = '🎉 クリア！';
       overlayMsg.innerHTML =
-        '3分間生き残った！<br>' +
+        '100秒間生き残った！<br>' +
         'ボーナス: <strong>' + bonus + 'G</strong><br>' +
         'スコア: <strong>' + scoreVal + '</strong><br>' +
         'ウェーブ: ' + waveNum + '<br>' +
+        '🎁 ボーナスコード: <strong>' + (getRevealedCodeList().join('</strong>、<strong>') || 'クリアを重ねると公開されます') + '</strong><br>' +
         '💰 所持ゴールド: <strong>' + gold + 'G</strong>';
     } else {
       burst(player.x, player.y, '#4ce0ff', 30);
@@ -777,20 +1013,26 @@
       // ゴールドステージ: 全敵が金色
       // 丸(ベーシック)×3 / 三角(ファスト)×3 / 四角(タンク)変更なし
       if (type === 'basic') {
-        e = { x:x, y:y, r:14, hp:Math.max(1, Math.ceil((2+waveHp)*3*hpMult)), maxHp:Math.max(1, Math.ceil((2+waveHp)*3*hpMult)), speed:90*speedBoost, color:'#ffd040', type:type, score:100, coinDrop:goldDrop };
+        var goldBasicHp = Math.max(1, Math.ceil((2+waveHp)*3*hpMult*ENEMY_HP_MULT));
+        e = { x:x, y:y, r:14, hp:goldBasicHp, maxHp:goldBasicHp, speed:90*speedBoost, color:'#ffd040', type:type, score:100, coinDrop:goldDrop };
       } else if (type === 'fast') {
-        e = { x:x, y:y, r:10, hp:Math.max(1, Math.ceil((2+waveHp)*3*hpMult)), maxHp:Math.max(1, Math.ceil((2+waveHp)*3*hpMult)), speed:150*speedBoost, color:'#ffcc00', type:type, score:150, coinDrop:goldDrop };
+        var goldFastHp = Math.max(1, Math.ceil((2+waveHp)*3*hpMult*ENEMY_HP_MULT));
+        e = { x:x, y:y, r:10, hp:goldFastHp, maxHp:goldFastHp, speed:150*speedBoost, color:'#ffcc00', type:type, score:150, coinDrop:goldDrop };
       } else {
-        e = { x:x, y:y, r:20, hp:Math.max(1, Math.ceil((5+waveHp*2)*hpMult)), maxHp:Math.max(1, Math.ceil((5+waveHp*2)*hpMult)), speed:60*speedBoost, color:'#ffaa00', type:type, score:300, coinDrop:goldDrop };
+        var goldTankHp = Math.max(1, Math.ceil((5+waveHp*2)*hpMult*ENEMY_HP_MULT));
+        e = { x:x, y:y, r:20, hp:goldTankHp, maxHp:goldTankHp, speed:60*speedBoost, color:'#ffaa00', type:type, score:300, coinDrop:goldDrop };
       }
     } else {
       // 丸(ベーシック)×3 / 三角(ファスト)×3 / 四角(タンク)変更なし
       if (type === 'basic') {
-        e = { x:x, y:y, r:14, hp:(2+waveHp)*3, maxHp:(2+waveHp)*3, speed:90*speedBoost, color:'#ff5a5a', type:type, score:100, coinDrop:1 };
+        var normalBasicHp = Math.max(1, Math.ceil((2+waveHp)*3*ENEMY_HP_MULT));
+        e = { x:x, y:y, r:14, hp:normalBasicHp, maxHp:normalBasicHp, speed:90*speedBoost, color:'#ff5a5a', type:type, score:100, coinDrop:1 };
       } else if (type === 'fast') {
-        e = { x:x, y:y, r:10, hp:(2+waveHp)*3, maxHp:(2+waveHp)*3, speed:150*speedBoost, color:'#ffa040', type:type, score:150, coinDrop:1 };
+        var normalFastHp = Math.max(1, Math.ceil((2+waveHp)*3*ENEMY_HP_MULT));
+        e = { x:x, y:y, r:10, hp:normalFastHp, maxHp:normalFastHp, speed:150*speedBoost, color:'#ffa040', type:type, score:150, coinDrop:1 };
       } else {
-        e = { x:x, y:y, r:20, hp:5+waveHp*2, maxHp:5+waveHp*2, speed:60*speedBoost, color:'#c46bff', type:type, score:300, coinDrop:1 };
+        var normalTankHp = Math.max(1, Math.ceil((5+waveHp*2)*ENEMY_HP_MULT));
+        e = { x:x, y:y, r:20, hp:normalTankHp, maxHp:normalTankHp, speed:60*speedBoost, color:'#c46bff', type:type, score:300, coinDrop:1 };
       }
     }
     enemies.push(e);
@@ -890,6 +1132,45 @@
     powerups.push({ x:x, y:y, r:12, type:types[Math.floor(rand(0,types.length))], life:8 });
   }
 
+  function updateNpcBattle(dt) {
+    var dx = player.x - npc.x;
+    var dy = player.y - npc.y;
+    var distance = Math.hypot(dx, dy) || 1;
+    var desiredDistance = 210;
+    var moveX = 0, moveY = 0;
+    if (distance > desiredDistance + 35) { moveX = dx / distance; moveY = dy / distance; }
+    else if (distance < desiredDistance - 35) { moveX = -dx / distance; moveY = -dy / distance; }
+    else { moveX = -dy / distance; moveY = dx / distance; }
+    npc.x = clamp(npc.x + moveX * npc.speed * dt, 30, W - 30);
+    npc.y = clamp(npc.y + moveY * npc.speed * dt, 30, H - 30);
+    npc.fireCooldown -= dt;
+    if (npc.fireCooldown <= 0 && distance < 520) {
+      var angle = Math.atan2(dy, dx);
+      bullets.push({ x:npc.x, y:npc.y, vx:Math.cos(angle) * (330 + npcLevel * 8), vy:Math.sin(angle) * (330 + npcLevel * 8), r:6, life:2.8, damage:npc.damage, color:'#ff5a5a', owner:'npc' });
+      npc.fireCooldown = Math.max(0.32, 0.82 - (npcLevel - 1) * 0.055);
+    }
+  }
+
+  function finishNpcBattle(won) {
+    if (gameState !== 'playing') return;
+    gameState = 'dead';
+    var npcRewardText = '';
+    if (won) {
+      var earnedRewards = awardClearRewards();
+      if (earnedRewards.length) {
+        npcRewardText = '<br>🎁 NPC撃破報酬: <strong>+' + earnedRewards.reduce(function (sum, reward) { return sum + reward.gold; }, 0) + 'G</strong>';
+      }
+      updateHomeUI();
+    }
+    overlayTtl.textContent = won ? '🏆 NPCに勝利！' : '💀 NPCに敗北';
+    overlayMsg.innerHTML = won
+      ? 'レベル ' + npcLevel + ' のNPCを倒しました！<br>NPC撃破数: <strong>' + clearCount + '回</strong>' + npcRewardText
+      : 'プレイヤーが倒れました。<br>レベル: <strong>' + npcLevel + '</strong> / NPCの残りHP: <strong>' + Math.max(0, npc.hp) + '</strong>';
+    gameOverBtn.textContent = 'ホームに戻る';
+    timerInfoEl.classList.add('hidden');
+    overlay.classList.remove('hidden-overlay');
+  }
+
   // ═══════════════════════════════════════
   //  弾発射
   // ═══════════════════════════════════════
@@ -897,9 +1178,13 @@
     var w = getWeapon();
     var dmgMult = getEquipDamageMult();
     var target = null, best = Infinity;
-    for (var i = 0; i < enemies.length; i++) {
-      var d = dist(player.x, player.y, enemies[i].x, enemies[i].y);
-      if (d < best) { best = d; target = enemies[i]; }
+    if (gameMode === 'npc') {
+      target = { x: npc.x, y: npc.y, homing: true };
+    } else {
+      for (var i = 0; i < enemies.length; i++) {
+        var d = dist(player.x, player.y, enemies[i].x, enemies[i].y);
+        if (d < best) { best = d; target = enemies[i]; }
+      }
     }
     var baseAng;
     if (target) baseAng = Math.atan2(target.y - player.y, target.x - player.x);
@@ -920,7 +1205,9 @@
         r: w.bulletR,
         life: BASE_BULLET_LIFE * w.range * getEquipRangeMult(),
         damage: w.damage * dmgMult,
-        color: w.color
+        color: w.color,
+        owner: 'player',
+        homing: gameMode === 'npc'
       });
     }
   }
@@ -939,7 +1226,9 @@
     var w = getWeapon();
 
     // タイマー
-    if (gameMode === 'gold') {
+    if (gameMode === 'npc') {
+      updateNpcBattle(dt);
+    } else if (gameMode === 'gold') {
       goldStageTimer -= dt;
       if (goldStageTimer <= 0) {
         goldStageTimer = 0;
@@ -950,7 +1239,7 @@
       normalTimer -= dt;
       if (normalTimer <= 0) {
         normalTimer = 0;
-        dieGame(true); // 3分でゲームクリア
+        dieGame(true); // 100秒でゲームクリア
         return;
       }
     }
@@ -964,7 +1253,7 @@
     if (mx === 0 && my === 0) { mx = mobileDir.x; my = mobileDir.y; }
     var mag = Math.hypot(mx, my);
     if (mag > 0) {
-      var spd = PLAYER_SPEED * player.speedMult * player.equipSpeedMult;
+      var spd = PLAYER_SPEED * player.speedMult * getEquipSpeedMult();
       player.x += (mx / mag) * spd * dt;
       player.y += (my / mag) * spd * dt;
     }
@@ -984,6 +1273,15 @@
     // 弾移動
     for (var bi = bullets.length - 1; bi >= 0; bi--) {
       var b = bullets[bi];
+      if (b.homing && b.owner === 'player' && gameMode === 'npc') {
+        var speed = Math.hypot(b.vx, b.vy) || BULLET_SPEED;
+        var desiredAngle = Math.atan2(npc.y - b.y, npc.x - b.x);
+        var currentAngle = Math.atan2(b.vy, b.vx);
+        var angleDiff = Math.atan2(Math.sin(desiredAngle - currentAngle), Math.cos(desiredAngle - currentAngle));
+        var newAngle = currentAngle + angleDiff * Math.min(1, dt * 4.5);
+        b.vx = Math.cos(newAngle) * speed;
+        b.vy = Math.sin(newAngle) * speed;
+      }
       b.x += b.vx * dt; b.y += b.vy * dt; b.life -= dt;
       if (b.life <= 0 || b.x < -20 || b.x > W + 20 || b.y < -20 || b.y > H + 20) bullets.splice(bi, 1);
     }
@@ -1009,6 +1307,17 @@
     // 弾 vs 敵
     for (var bi2 = bullets.length - 1; bi2 >= 0; bi2--) {
       var bu = bullets[bi2];
+      if (gameMode === 'npc' && bu.owner !== 'npc') {
+        if (dist(bu.x, bu.y, npc.x, npc.y) < bu.r + PLAYER_R) {
+          npc.hp -= bu.damage;
+          npc.hitUntil = performance.now() + 120;
+          burst(bu.x, bu.y, '#ff6a6a', 8);
+          bullets.splice(bi2, 1);
+          if (npc.hp <= 0) finishNpcBattle(true);
+          continue;
+        }
+      }
+      if (bu.owner === 'npc') continue;
       for (var ei2 = enemies.length - 1; ei2 >= 0; ei2--) {
         var en = enemies[ei2];
         if (dist(bu.x, bu.y, en.x, en.y) < bu.r + en.r) {
@@ -1027,6 +1336,27 @@
       }
     }
 
+    // NPC弾 vs プレイヤー
+    if (gameMode === 'npc') {
+      var npcNow = performance.now();
+      for (var nbi = bullets.length - 1; nbi >= 0; nbi--) {
+        var npcBullet = bullets[nbi];
+        if (npcBullet.owner === 'npc' && dist(npcBullet.x, npcBullet.y, player.x, player.y) < npcBullet.r + PLAYER_R && npcNow >= player.invulnUntil) {
+          bullets.splice(nbi, 1);
+          if (Math.random() >= getEquipArmorChance()) {
+            player.hp -= npcBullet.damage;
+            player.hpDisplayUntil = npcNow + HP_DISPLAY_DURATION;
+            burst(player.x, player.y, '#ff5a5a', 10);
+          } else {
+            player.barrierUntil = npcNow + BARRIER_DURATION;
+            burst(player.x, player.y, '#7af0ff', 10);
+          }
+          player.invulnUntil = npcNow + Math.max(520, 900 - (npcLevel - 1) * 25);
+          if (player.hp <= 0) finishNpcBattle(false);
+        }
+      }
+    }
+
     // 敵 vs プレイヤー
     var now = performance.now();
     if (now >= player.invulnUntil) {
@@ -1037,13 +1367,13 @@
             // チェストプレート: 被ダメージ軽減（確率でブロック）
             if (Math.random() >= getEquipArmorChance()) {
               player.hp--;
+              player.hpDisplayUntil = now + HP_DISPLAY_DURATION;
             } else {
-              burst(player.x, player.y, '#4ce0ff', 10);
+              player.barrierUntil = now + BARRIER_DURATION;
             }
           }
           player.invulnUntil = now + 1200;
-          shakeTimer = 0.4; flashAlpha = 0.4;
-          burst(player.x, player.y, '#ff5555', 14);
+          shakeTimer = 0.5;
           enemies.splice(ei3, 1);
           if (player.hp <= 0) { dieGame(); return; }
           break;
@@ -1056,7 +1386,9 @@
       var pu = powerups[pi2];
       if (dist(player.x, player.y, pu.x, pu.y) < PLAYER_R + pu.r) {
         if (pu.type === 'heal') {
+          var previousHp = player.hp;
           player.hp = Math.min(getMaxHp(), player.hp + 1);
+          if (player.hp > previousHp) player.hpDisplayUntil = now + HP_DISPLAY_DURATION;
           burst(pu.x, pu.y, '#4cff6a', 12);
         } else if (pu.type === 'rapid') {
           player.rapidUntil = now + 5000;
@@ -1080,6 +1412,7 @@
           player.regenTimer -= dt;
           if (player.regenTimer <= 0) {
             player.hp++;
+            player.hpDisplayUntil = now + HP_DISPLAY_DURATION;
             player.regenTimer = 60 / regen;
             burst(player.x, player.y, '#4cff6a', 6);
           }
@@ -1087,9 +1420,9 @@
       }
     }
 
-    // ウェーブ
-    spawnTimer -= dt;
-    if (spawnTimer <= 0) {
+    // ウェーブ（NPC対戦では通常の敵を出さない）
+    if (gameMode !== 'npc') spawnTimer -= dt;
+    if (gameMode !== 'npc' && spawnTimer <= 0) {
       var cnt;
       var interval;
       if (gameMode === 'gold') {
@@ -1116,9 +1449,6 @@
   // ═══════════════════════════════════════
 
   function drawPlayerClassic() {
-    var now = performance.now();
-    var invuln = now < player.invulnUntil;
-    if (invuln && Math.floor(now / 80) % 2 === 0) return;
     ctx.shadowColor = '#4ce0ff'; ctx.shadowBlur = 22; ctx.fillStyle = '#4ce0ff';
     ctx.beginPath(); ctx.arc(player.x, player.y, PLAYER_R, 0, Math.PI * 2); ctx.fill();
     ctx.shadowBlur = 0;
@@ -1151,10 +1481,6 @@
   }
 
   function drawPlayerNeon() {
-    var now = performance.now();
-    var invuln = now < player.invulnUntil;
-    if (invuln && Math.floor(now / 80) % 2 === 0) return;
-
     var aimAng = -Math.PI / 2;
     var best = Infinity;
     for (var i = 0; i < enemies.length; i++) {
@@ -1232,10 +1558,6 @@
 
   // プレイヤー（アニメ風ヒーロー）
   function drawPlayer() {
-    var now = performance.now();
-    var invuln = now < player.invulnUntil;
-    if (invuln && Math.floor(now / 80) % 2 === 0) return;
-
     // 照準方向（一番近い敵）
     var aimAng = -Math.PI / 2;
     var best = Infinity;
@@ -1551,6 +1873,60 @@
     ctx.beginPath(); ctx.moveTo(-2.5, -4.5); ctx.lineTo(2.5, -4.5); ctx.stroke();
   }
 
+  function drawPlayerBarrier() {
+    var now = performance.now();
+    if (now >= player.barrierUntil) return;
+
+    var progress = (player.barrierUntil - now) / BARRIER_DURATION;
+    var pulse = 1 + Math.sin(now / 75) * 0.035;
+    var radius = (PLAYER_R + 12) * pulse;
+
+    ctx.save();
+    ctx.globalAlpha = Math.min(1, progress * 2.5);
+    ctx.fillStyle = 'rgba(75,220,255,.12)';
+    ctx.beginPath();
+    ctx.arc(player.x, player.y, radius, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.strokeStyle = '#7af0ff';
+    ctx.lineWidth = 2.5;
+    ctx.shadowColor = '#36dfff';
+    ctx.shadowBlur = 18;
+    ctx.beginPath();
+    ctx.arc(player.x, player.y, radius, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.lineWidth = 1;
+    ctx.globalAlpha *= 0.75;
+    ctx.beginPath();
+    ctx.arc(player.x, player.y, radius - 5, -now / 350, -now / 350 + Math.PI * 1.5);
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  function drawPlayerHealthIndicator() {
+    var now = performance.now();
+    if (gameMode === 'gold' || now >= player.hpDisplayUntil) return;
+
+    var maxHp = getMaxHp();
+    var segmentAngle = (Math.PI * 2) / maxHp;
+    var gap = Math.min(0.12, segmentAngle * 0.2);
+    var alpha = Math.min(1, (player.hpDisplayUntil - now) / 400);
+
+    ctx.save();
+    ctx.globalAlpha = alpha;
+    ctx.lineWidth = 4;
+    ctx.lineCap = 'round';
+    ctx.shadowColor = '#ff536b';
+    ctx.shadowBlur = 10;
+    for (var i = 0; i < maxHp; i++) {
+      var start = -Math.PI / 2 + i * segmentAngle + gap / 2;
+      ctx.beginPath();
+      ctx.arc(player.x, player.y, PLAYER_R + 11, start, start + segmentAngle - gap);
+      ctx.strokeStyle = i < player.hp ? '#ff536b' : 'rgba(255,255,255,.2)';
+      ctx.stroke();
+    }
+    ctx.restore();
+  }
+
   // ═══════════════════════════════════════
   //  描画
   // ═══════════════════════════════════════
@@ -1564,7 +1940,7 @@
 
     // 画面揺れ
     if (shakeTimer > 0) {
-      var intensity = shakeTimer * 14;
+      var intensity = shakeTimer * 38;
       ctx.translate(rand(-intensity, intensity), rand(-intensity, intensity));
     }
 
@@ -1625,10 +2001,29 @@
       ctx.shadowBlur = 0;
     }
 
+    if (gameMode === 'npc') {
+      ctx.save();
+      ctx.translate(npc.x, npc.y);
+      ctx.shadowColor = '#ff5a5a'; ctx.shadowBlur = npc.hitUntil > performance.now() ? 28 : 12;
+      ctx.fillStyle = npc.hitUntil > performance.now() ? '#ffffff' : '#ff5a5a';
+      ctx.beginPath(); ctx.arc(0, 0, PLAYER_R, 0, Math.PI * 2); ctx.fill();
+      ctx.shadowBlur = 0;
+      ctx.fillStyle = '#3a1824'; ctx.beginPath(); ctx.arc(0, -4, 8, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = '#fff'; ctx.font = 'bold 10px sans-serif'; ctx.textAlign = 'center';
+      ctx.fillText('NPC', 0, -PLAYER_R - 8);
+      ctx.fillStyle = 'rgba(0,0,0,.7)'; ctx.fillRect(-18, -PLAYER_R - 3, 36, 4);
+      ctx.fillStyle = '#ff5a5a'; ctx.fillRect(-18, -PLAYER_R - 3, 36 * Math.max(0, npc.hp / npc.maxHp), 4);
+      ctx.restore();
+    }
+
     // プレイヤー
     if (skinStyle === 'anime') drawPlayer();
     else if (skinStyle === 'classic') drawPlayerClassic();
     else drawPlayerNeon();
+
+    drawEquipmentVisual();
+    drawPlayerBarrier();
+    drawPlayerHealthIndicator();
 
     // パーティクル
     for (var ppi = 0; ppi < particles.length; ppi++) {
@@ -1657,7 +2052,6 @@
     ui_hiscore.textContent = highScore;
     ui_gold.textContent = gold;
     if (gameMode === 'gold') {
-      ui_hp.innerHTML = '<div class="hp-seg full infinite">∞</div>';
       timerEl.classList.add('gold-timer');
       timerEl.classList.remove('normal-timer');
       var timeLeft = Math.ceil(goldStageTimer);
@@ -1669,12 +2063,6 @@
       var timeLeft = Math.ceil(normalTimer);
       timerEl.textContent = timeLeft;
       timerEl.classList.toggle('urgent', timeLeft <= 10);
-      var maxHp = getMaxHp();
-      var html = '';
-      for (var i = 0; i < maxHp; i++) {
-        html += '<div class="hp-seg' + (i < player.hp ? ' full' : '') + '"></div>';
-      }
-      ui_hp.innerHTML = html;
     }
   }
 
@@ -1693,6 +2081,11 @@
   shopBtn.addEventListener('click', goToShop);
   homeStartBtn.addEventListener('click', goToGame);
   goldStageBtn.addEventListener('click', goToGoldStage);
+  npcBattleBtn.addEventListener('click', goToNpcBattle);
+  npcLevelSelect.addEventListener('change', function () {
+    npcLevel = Math.max(1, Math.min(10, Number(npcLevelSelect.value) || 1));
+    localStorage.setItem('survivalNpcLevel', String(npcLevel));
+  });
   shopBackBtn.addEventListener('click', goToHome);
   gameHomeBtn.addEventListener('click', goToHome);
   gameOverBtn.addEventListener('click', goToHome);
@@ -1703,13 +2096,16 @@
   adminGoldSetBtn.addEventListener('click', adminSetGold);
   adminUnlockWeaponsBtn.addEventListener('click', adminUnlockWeapons);
   adminUnlockEquipBtn.addEventListener('click', adminUnlockEquip);
+  adminUnlockCheatBtn.addEventListener('click', adminUnlockCheats);
   adminCloseBtn.addEventListener('click', closeAdminPanel);
   skinBtn.addEventListener('click', toggleSkin);
   gachaCloseBtn.addEventListener('click', closeGacha);
   equipBtn.addEventListener('click', goToEquip);
   equipBackBtn.addEventListener('click', goToHome);
+  helpBtn.addEventListener('click', goToHelp);
+  helpBackBtn.addEventListener('click', goToHome);
   resetBtn.addEventListener('click', function () {
-    if (!confirm('すべてのデータをリセットしますか？\n（ゴールド・武器・ハイスコア・装備）')) return;
+    if (!confirm('すべてのデータをリセットしますか？\n（ゴールド・武器・ハイスコア・装備・クリア数・クリア報酬）')) return;
     localStorage.removeItem('survivalGold');
     localStorage.removeItem('survivalWeapons');
     localStorage.removeItem('survivalEquipped');
@@ -1719,6 +2115,9 @@
     localStorage.removeItem('survivalGoldFreeUsed');
     localStorage.removeItem('survivalCodes');
     localStorage.removeItem('survivalSkin');
+    localStorage.removeItem('survivalClearCount');
+    localStorage.removeItem('survivalClearRewards');
+    localStorage.removeItem('survivalRevealedCodes');
     gold = 0;
     ownedWeapons = ['pistol'];
     equippedId = 'pistol';
@@ -1728,6 +2127,9 @@
     goldFreeUsed = false;
     goldFreeSession = false;
     usedCodes = [];
+    clearCount = 0;
+    clearedRewards = [];
+    revealedCodeCount = 0;
     skinStyle = 'anime';
     skinBtn.textContent = 'アニメ';
     updateHomeUI();
