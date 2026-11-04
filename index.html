@@ -19,20 +19,6 @@
       <p class="intro">遊びたいゲームを選ぼう。アーカイブ作品も、いつでもプレイ・編集できます。</p>
     </header>
 
-    <section class="portal-quick-access" aria-label="ゲームポータルのQRコード">
-      <div>
-        <div class="qr-panel">
-          <img src="game-portal-qr.png" alt="ゲームポータルのQRコード" aria-label="ゲームポータルのQRコード" />
-        </div>
-        <div class="qr-url" id="portal-url">file:///C:/Users/fullm/Desktop/えいとゲーム/index.html</div>
-      </div>
-      <div class="qr-copy">
-        <p><strong>スマホで読み取るとすぐ開ける</strong></p>
-        <p>このQRコードを読み取れば、ゲームポータルのトップページに直接移動できます。</p>
-        <a href="index.html">ゲームポータルを開く <span aria-hidden="true">↗</span></a>
-      </div>
-    </section>
-
     <section class="collection" aria-labelledby="current-heading">
       <div class="section-heading">
         <div>
@@ -145,11 +131,6 @@
     </footer>
   </main>
   <script>
-    const portalUrlText = document.getElementById("portal-url");
-    if (portalUrlText) {
-      portalUrlText.textContent = window.location.href;
-    }
-
     document.querySelectorAll(".edit-link").forEach((link) => {
       const source = new URL(link.dataset.source, window.location.href);
       if (window.location.protocol === "file:") {
