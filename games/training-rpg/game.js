@@ -14,7 +14,8 @@
   const encounterOverlay = document.getElementById("encounterOverlay");
   const castleVictoryOverlay = document.getElementById("castleVictoryOverlay");
   const castleVictoryTitle = document.getElementById("castleVictoryTitle");
-  const SAVE_KEY = "tabitabi-monsters-save-v1";
+  const SAVE_SLOT_ID = window.TrainingRpgActiveSlotId || "slot-1";
+  const START_NEW_GAME = window.TrainingRpgStartNew === true;
   const WORLD = { width: 4100, height: 3200 };
   const MAGIC_GATE = { x: WORLD.width / 2, y: WORLD.height / 2 };
   const MAX_LEVEL = 100;
@@ -133,9 +134,16 @@
   function unlockedCastleAbilities() {
     return CASTLES.filter((castle, index) => castle.ability && state.castles[index].bossDefeated).map((castle) => castle.ability);
   }
+  let saveWritesEnabled = true;
   const state = loadState();
   if (!state.party.length && state.characterId) state.party.push(state.characterId);
   const keys = new Set();
+  const FORWARD_KEYS = new Set(["arrowup", "w"]);
+  const BACKWARD_KEYS = new Set(["arrowdown", "s"]);
+  const LEFT_KEYS = new Set(["arrowleft", "a"]);
+  const RIGHT_KEYS = new Set(["arrowright", "d"]);
+  const DOUBLE_TAP_WINDOW = 320;
+  const TURN_SPEED = 2.8;
   let battle = null;
   let toastTimer;
   let castleVictoryTimer;
@@ -144,12 +152,15 @@
   let grassStepDistance = 0;
   let nextWildEncounterAt = 0;
   let encounterAnimation = false;
+  let lastForwardTapAt = null;
+  let lastBackwardTapAt = null;
+  let forwardSprintActive = false;
   let cameraHeading = state.facing;
   let camera = null;
 
   function loadState() {
     try {
-      const saved = JSON.parse(localStorage.getItem(SAVE_KEY) || "null");
+      const saved = START_NEW_GAME ? null : window.TrainingRpgSaveStorage.loadSlot(SAVE_SLOT_ID);
       if (!saved || typeof saved !== "object") return { ...defaults, defeated: [], stock: { ...defaults.stock }, patchReady: {} };
       const gameCleared = saved.gameCleared === true || saved.castles?.[FINAL_CASTLE_INDEX]?.bossDefeated === true;
       const resetFinalCastle = saved.castle?.active === true
@@ -227,13 +238,25 @@
       };
     } catch (error) {
       console.warn("セーブデータを読み込めませんでした。", error);
+      saveWritesEnabled = false;
       return { ...defaults, defeated: [], stock: { ...defaults.stock }, patchReady: {} };
     }
   }
 
-  function save() {
-    try { localStorage.setItem(SAVE_KEY, JSON.stringify(state)); }
-    catch (error) { console.warn("セーブデータを保存できませんでした。", error); showToast("保存できませんでした。ブラウザーの空き容量をご確認ください。"); }
+  function save(notifySuccess = false) {
+    if (!saveWritesEnabled) {
+      if (notifySuccess) showToast("読み込みに問題があったため、セーブを停止しています。");
+      return false;
+    }
+    try {
+      window.TrainingRpgSaveStorage.saveSlot(SAVE_SLOT_ID, state);
+      if (notifySuccess) showToast("セーブしました。");
+      return true;
+    } catch (error) {
+      console.warn("セーブデータを保存できませんでした。", error);
+      showToast("保存できませんでした。ブラウザーの空き容量をご確認ください。");
+      return false;
+    }
   }
   const threshold = () => 30 + (state.level - 1) * 18;
   function characterFormAt(character, level) {
@@ -334,6 +357,13 @@
   function closeDialog() {
     dialogLayer.hidden = true;
     dialogCard.innerHTML = "";
+  }
+  function openGameMenu() {
+    if (battle || encounterAnimation) {
+      showToast("冒険中のイベントが終わってからメニューを開いてね。");
+      return;
+    }
+    openDialog(`<button class="dialog-close" type="button" aria-label="閉じる">×</button><p class="dialog-kicker">ADVENTURE MENU</p><h2 id="dialogTitle">ゲームメニュー</h2><p class="dialog-copy">冒険の進み具合を保存できます。</p><div class="shop-list"><button class="primary-button full-button" type="button" data-save-now>セーブする</button><button class="secondary-button full-button" type="button" data-return-title>タイトルへ戻る</button></div>`);
   }
   function updateHud() {
     const character = playerCharacter();
@@ -991,10 +1021,19 @@
   document.getElementById("trainButton").addEventListener("click",trainPlayer);
   document.getElementById("dexButton").addEventListener("click",openMonsterDex);
   document.getElementById("partyButton").addEventListener("click",openPartyMenu);
+  document.getElementById("gameMenuButton").addEventListener("click",openGameMenu);
   dialogLayer.addEventListener("click",(event)=>{
     if(event.target===dialogLayer){if(!battle)closeDialog();return;}
     const close=event.target.closest(".dialog-close");
     if(close){closeDialog();return;}
+    const saveNow=event.target.closest("[data-save-now]");
+    if(saveNow){closeDialog();save(true);return;}
+    const returnTitle=event.target.closest("[data-return-title]");
+    if(returnTitle){
+      if(save())window.location.reload();
+      else if(!saveWritesEnabled)showToast("セーブできないため、タイトルへ戻れません。");
+      return;
+    }
     const enterRealmButton=event.target.closest("[data-realm-enter]");
     if(enterRealmButton){enterBossRealm();return;}
     const enterCastleButton=event.target.closest("[data-castle-enter]");
@@ -1013,21 +1052,62 @@
   dialogLayer.addEventListener("keydown",(event)=>{if(event.key==="Escape"&&!battle)closeDialog();});
   window.addEventListener("keydown",(event)=>{
     if(!state.characterId)return;
-    if(["ArrowUp","ArrowDown","ArrowLeft","ArrowRight"].includes(event.key)){
+    const key = event.key.toLowerCase();
+    const isArrow = ["arrowup","arrowdown","arrowleft","arrowright"].includes(key);
+    if(isArrow){
       event.preventDefault();
-      if(!encounterAnimation)keys.add(event.key.toLowerCase());
-      return;
     }
     if(encounterAnimation)return;
     if(event.key===" ")event.preventDefault();
-    if(event.key.toLowerCase()==="e"&&!event.repeat)interact();
+    if(key==="e"&&!event.repeat)interact();
     if(event.key==="Escape"&&battle?.result)finishBattleAndClose();
     if(event.key===" ")return;
-    if(event.target.matches("input,textarea,select,button"))return;
-    keys.add(event.key.toLowerCase());
+    if(event.target.matches("input,textarea,select,button")&&!event.target.closest("[hidden]"))return;
+    if(!dialogLayer.hidden&&(isArrow||["w","a","s","d"].includes(key)))return;
+    if (isArrow || ["w","a","s","d"].includes(key)) {
+      if (!event.repeat && !state.castle.active && !state.realm.active) {
+        const now = performance.now();
+        if (FORWARD_KEYS.has(key)) {
+          if (lastForwardTapAt !== null && now - lastForwardTapAt <= DOUBLE_TAP_WINDOW) {
+            forwardSprintActive = true;
+            lastForwardTapAt = null;
+          } else {
+            lastForwardTapAt = now;
+          }
+        } else if (BACKWARD_KEYS.has(key)) {
+          if (lastBackwardTapAt !== null && now - lastBackwardTapAt <= DOUBLE_TAP_WINDOW) {
+            state.facing = normalizeAngle(state.facing + Math.PI);
+            lastBackwardTapAt = null;
+            save();
+            saveTime = now;
+            return;
+          }
+          lastBackwardTapAt = now;
+        }
+      }
+      keys.add(key);
+      return;
+    }
+    keys.add(key);
   });
-  window.addEventListener("keyup",(event)=>keys.delete(event.key.toLowerCase()));
-  window.addEventListener("blur",()=>keys.clear());
+  window.addEventListener("keyup",(event)=>{
+    const key = event.key.toLowerCase();
+    keys.delete(key);
+    if (FORWARD_KEYS.has(key) && ![...FORWARD_KEYS].some((forwardKey) => keys.has(forwardKey))) {
+      forwardSprintActive = false;
+    }
+    if (!state.castle.active && !state.realm.active && (LEFT_KEYS.has(key) || RIGHT_KEYS.has(key))
+      && ![...LEFT_KEYS, ...RIGHT_KEYS].some((turnKey) => keys.has(turnKey))) {
+      save();
+      saveTime = performance.now();
+    }
+  });
+  window.addEventListener("blur",()=>{
+    keys.clear();
+    forwardSprintActive = false;
+    lastForwardTapAt = null;
+    lastBackwardTapAt = null;
+  });
   window.addEventListener("resize",resizeCanvas);
   function resizeCanvas(){
     const rect=canvas.getBoundingClientRect(),ratio=Math.min(window.devicePixelRatio||1,2);
@@ -1088,7 +1168,8 @@
       return;
     }
     worldColumn.classList.remove("is-boss-realm");
-    document.querySelector(".world-controls p span").innerHTML = "視点追従 · 話す・調べる <kbd>E</kbd>";
+    document.getElementById("movementHint").innerHTML = "左右 <kbd>A</kbd>/<kbd>←</kbd>旋回 · 前後 <kbd>W</kbd>/<kbd>↑</kbd> <kbd>S</kbd>/<kbd>↓</kbd>移動 · 前進2回（2回目を長押し）で加速 · 後退2回で反転";
+    document.getElementById("contextHint").innerHTML = "話す・調べる <kbd>E</kbd>";
     document.querySelector(".world-label").textContent = "FOLLOW CAMERA · ひだまり地方";
     document.querySelector(".minimap-wrap > span").textContent = "WORLD MAP";
     document.querySelector(".map-chip").textContent = "🧭 ひだまり地方";
@@ -1335,7 +1416,8 @@
     const point = (location) => ({ x: location.x * sx, y: location.y * sy });
     document.querySelector(".map-chip").textContent = "🌌 ボスマジモン町";
     document.querySelector(".world-label").textContent = "BOSS MONSTER WORLD";
-    document.querySelector(".world-controls p span").innerHTML = "異世界を歩く · 町・城で E <kbd>E</kbd>";
+    document.getElementById("movementHint").innerHTML = "画面方向へ移動 <kbd>W</kbd>/<kbd>A</kbd>/<kbd>S</kbd>/<kbd>D</kbd> · <kbd>↑</kbd>/<kbd>←</kbd>/<kbd>↓</kbd>/<kbd>→</kbd>";
+    document.getElementById("contextHint").innerHTML = "町・城で調べる <kbd>E</kbd>";
     ctx.fillStyle = "#171b37";
     ctx.fillRect(0, 0, width, height);
     const land = ctx.createLinearGradient(0, 0, width, height);
@@ -1432,7 +1514,8 @@
     const mechanic = castle.final ? FINAL_GIMMICKS[progress.finalStep]?.id : castle.mechanic;
     const puzzleCastle = { ...castle, mechanic };
     document.querySelector(".map-chip").textContent = `🏰 ${castle.name}`;
-    document.querySelector(".world-controls p span").innerHTML = "城内を歩く · 仕掛けを調べる <kbd>E</kbd>";
+    document.getElementById("movementHint").innerHTML = "画面方向へ移動 <kbd>W</kbd>/<kbd>A</kbd>/<kbd>S</kbd>/<kbd>D</kbd> · <kbd>↑</kbd>/<kbd>←</kbd>/<kbd>↓</kbd>/<kbd>→</kbd>";
+    document.getElementById("contextHint").innerHTML = "仕掛けを調べる <kbd>E</kbd>";
     ctx.fillStyle = "#272a2b";
     ctx.fillRect(0, 0, width, height);
     const stone = ctx.createLinearGradient(0, 20 * sy, 0, height);
@@ -1692,34 +1775,50 @@
       ctx.fillText(character.name, x, y - 37 * scale);
     }
   }
+  function normalizeAngle(angle) {
+    return Math.atan2(Math.sin(angle), Math.cos(angle));
+  }
   function updateMovement(delta){
     if(!dialogLayer.hidden || encounterAnimation)return;
     if (state.castle.active) { updateCastleMovement(delta); return; }
     if (state.realm.active) { updateBossRealmMovement(delta); return; }
-    let dx=0,dy=0;if(keys.has("arrowleft")||keys.has("a"))dx--;if(keys.has("arrowright")||keys.has("d"))dx++;
-    if(keys.has("arrowup")||keys.has("w"))dy--;if(keys.has("arrowdown")||keys.has("s"))dy++;
-    if(!dx&&!dy)return;
-    const distance=150*delta/1000,length=Math.hypot(dx,dy),previousGrass=grassPatchAt();
-    state.x=Math.max(30,Math.min(WORLD.width-30,state.x+dx/length*distance));state.y=Math.max(30,Math.min(WORLD.height-30,state.y+dy/length*distance));
-    state.facing=Math.atan2(dx,-dy);
-    const grass = grassPatchAt();
-    if (!grass) {
-      grassStepDistance = 0;
-    } else if (!previousGrass || grass.id !== previousGrass.id) {
-      grassStepDistance = 0;
-      triggerGrassEncounter(grass, true);
-      if (encounterAnimation) return;
-    } else {
-      grassStepDistance += distance;
-      while (grassStepDistance >= 45) {
-        grassStepDistance -= 45;
-        if (Date.now() >= nextWildEncounterAt && Math.random() < .055) {
-          triggerGrassEncounter(grass);
-          return;
+    const turnRight = keys.has("arrowright") || keys.has("d");
+    const turnLeft = keys.has("arrowleft") || keys.has("a");
+    const turnDirection = Number(turnRight) - Number(turnLeft);
+    if (turnDirection) state.facing = normalizeAngle(state.facing + turnDirection * TURN_SPEED * delta / 1000);
+
+    const forward = keys.has("arrowup") || keys.has("w");
+    const backward = keys.has("arrowdown") || keys.has("s");
+    const direction = Number(forward) - Number(backward);
+    let distance = 0;
+    if (direction) {
+      const speed = direction > 0 && forwardSprintActive ? 180 : 150;
+      distance = speed * delta / 1000 * direction;
+      const previousGrass = grassPatchAt();
+      state.x = Math.max(30, Math.min(WORLD.width - 30, state.x + Math.sin(cameraHeading) * distance));
+      state.y = Math.max(30, Math.min(WORLD.height - 30, state.y - Math.cos(cameraHeading) * distance));
+      const grass = grassPatchAt();
+      if (!grass) {
+        grassStepDistance = 0;
+      } else if (!previousGrass || grass.id !== previousGrass.id) {
+        grassStepDistance = 0;
+        triggerGrassEncounter(grass, true);
+        if (encounterAnimation) return;
+      } else {
+        grassStepDistance += Math.abs(distance);
+        while (grassStepDistance >= 45) {
+          grassStepDistance -= 45;
+          if (Date.now() >= nextWildEncounterAt && Math.random() < .055) {
+            triggerGrassEncounter(grass);
+            return;
+          }
         }
       }
     }
-    if(performance.now()-saveTime>1500){save();saveTime=performance.now();}
+    if ((turnDirection || direction) && performance.now() - saveTime > 1500) {
+      save();
+      saveTime = performance.now();
+    }
   }
   function updateBossRealmMovement(delta) {
     let dx = 0, dy = 0;

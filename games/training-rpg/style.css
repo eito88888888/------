@@ -103,6 +103,23 @@ kbd { display: inline-grid; min-width: 19px; height: 19px; padding: 0 4px; place
 .dex-button strong { color: #8a9b80; font-size: 9px; }
 .tip-card p { margin: 10px 0 0; color: #89968b; font-size: 10px; line-height: 1.9; }
 .save-note { margin: 0 2px; color: #abb4a9; font-size: 9px; }
+.title-screen { display: grid; min-height: 100vh; padding: 24px; place-items: center; background: radial-gradient(ellipse at 50% 0%,#f8ffe9 0,#e9f4e8 48%,#dce9dc 100%); }
+.title-screen[hidden] { display: none; }
+.title-panel { width: min(940px,100%); padding: clamp(24px,5vw,48px); border: 1px solid rgba(255,255,255,.92); border-radius: 24px; background: rgba(255,255,250,.92); box-shadow: 0 24px 80px rgba(49,77,51,.16); text-align: center; }
+.title-panel h1 { margin: 7px 0; color: #355a40; font-size: clamp(32px,7vw,54px); }
+.title-copy { margin: 0 0 26px; color: #788a78; font-size: 13px; }
+.save-slots { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 12px; text-align: left; }
+.save-slot { display: flex; min-width: 0; flex-direction: column; padding: 17px; border: 1px solid #e3ebdf; border-radius: 15px; background: #fcfdf9; }
+.save-slot h2 { margin: 0; color: #49664b; font-size: 16px; }
+.save-slot-summary { min-height: 38px; margin: 11px 0 4px; color: #657b65; font-size: 12px; font-weight: 800; }
+.save-slot-date { min-height: 28px; margin: 0 0 12px; color: #98a395; font-size: 10px; }
+.save-slot-actions { display: grid; gap: 7px; margin-top: auto; }
+.save-slot-actions button { min-height: 38px; padding: 9px; }
+.save-slot-actions button:disabled { cursor: not-allowed; opacity: .48; }
+.title-error { margin: 18px 0 0; color: #a64f3f; font-size: 12px; }
+.title-error[hidden] { display: none; }
+.title-footnote { margin: 20px 0 0; color: #9aa799; font-size: 10px; }
+.game-menu-button { flex: 0 0 auto; }
 .dialog-layer { position: fixed; z-index: 5; inset: 0; display: grid; padding: 18px; place-items: center; background: rgba(35,51,40,.43); backdrop-filter: blur(4px); }
 .dialog-layer[hidden] { display: none; }
 .character-select { position: fixed; z-index: 6; inset: 0; display: grid; overflow: auto; padding: 24px; place-items: center; background: rgba(35,51,40,.6); backdrop-filter: blur(6px); }
@@ -200,6 +217,10 @@ kbd { display: inline-grid; min-width: 19px; height: 19px; padding: 0 4px; place
   .map-legend { gap: 6px; font-size: 8px; }
 }
 @media (max-width: 680px) {
+  .title-screen { padding: 14px; }
+  .save-slots { grid-template-columns: 1fr; }
+  .save-slot { padding: 14px; }
+  .save-slot-summary, .save-slot-date { min-height: 0; }
   .character-select-card { padding: 22px 18px; }
   .character-choices { grid-template-columns: 1fr; }
   .character-choice { display: grid; grid-template-columns: 58px minmax(0,1fr); align-items: center; column-gap: 12px; padding: 11px; text-align: left; }

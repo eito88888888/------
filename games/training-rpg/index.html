@@ -6,13 +6,25 @@
   <meta name="theme-color" content="#e9f4e8" />
   <title>モンスター育成記 | 旅するなかまたち</title>
   <link rel="stylesheet" href="style.css" />
-  <script src="game.js" defer></script>
+  <script src="save-storage.js" defer></script>
+  <script src="game-launcher.js" defer></script>
 </head>
 <body>
-  <main class="game-shell">
+  <section class="title-screen" id="titleScreen" aria-labelledby="titleHeading">
+    <div class="title-panel">
+      <p class="eyebrow">A LITTLE WORLD, A BIG ADVENTURE</p>
+      <h1 id="titleHeading">モンスター育成記</h1>
+      <p class="title-copy">いっしょに旅するマジモンを選んで、冒険をはじめよう。</p>
+      <div class="save-slots" id="saveSlots" aria-label="セーブデータ"></div>
+      <p class="title-error" id="saveError" role="status" aria-live="polite" hidden></p>
+      <p class="title-footnote">セーブデータはこのブラウザーに保存されます。</p>
+    </div>
+  </section>
+  <main class="game-shell" id="gameShell" hidden>
     <header class="topbar">
       <a class="back-link" href="../../index.html">← ゲームポータル</a>
       <div class="brand"><span class="brand-icon">✿</span><span>旅するなかまたち</span></div>
+      <button class="quiet-button game-menu-button" id="gameMenuButton" type="button">☰ メニュー</button>
       <div class="top-stats"><span class="gold-pill">🪙 <strong id="goldValue">80</strong> G</span><span class="level-pill">冒険者 Lv.<strong id="levelValue">1</strong></span></div>
     </header>
     <section class="intro-row">
@@ -29,7 +41,7 @@
           <div class="map-legend"><span id="mapPlayerLegend">🧑 トレーナー</span><span id="mapMagimonLegend">🐕 ゴロー</span><span>✦ 話せる相手</span></div>
           <div id="nearbyHint" class="nearby-hint" aria-live="polite"></div>
         </div>
-        <div class="world-controls"><p>移動 <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> / <kbd>↑</kbd><kbd>←</kbd><kbd>↓</kbd><kbd>→</kbd><span>視点追従 · 話す・調べる <kbd>E</kbd></span></p></div>
+        <div class="world-controls"><p><span id="movementHint">左右で旋回 · 前後で移動 · 前進2回（2回目を長押し）で加速 · 後退2回で振り向く</span><span id="contextHint">話す・調べる <kbd>E</kbd></span></p></div>
       </div>
       <aside class="side-column">
         <section class="mini-card player-card">
